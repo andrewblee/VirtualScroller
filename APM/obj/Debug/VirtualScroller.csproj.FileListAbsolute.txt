@@ -1,0 +1,6 @@
+C:\Users\Andrew\Desktop\GitHub\VirtualScroller\APM\bin\VirtualScroller.dll.config
+C:\Users\Andrew\Desktop\GitHub\VirtualScroller\APM\bin\VirtualScroller.dll
+C:\Users\Andrew\Desktop\GitHub\VirtualScroller\APM\bin\VirtualScroller.pdb
+C:\Users\Andrew\Desktop\GitHub\VirtualScroller\APM\obj\Debug\VirtualScroller.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Desktop\GitHub\VirtualScroller\APM\obj\Debug\VirtualScroller.dll
+C:\Users\Andrew\Desktop\GitHub\VirtualScroller\APM\obj\Debug\VirtualScroller.pdb

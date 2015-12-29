@@ -136,7 +136,7 @@
                 'name': '27'
             }
         };
-        var headerRowDataById = {
+        var partsByPartId = {
             '1': {
                 'id': 1,
                 'name': '1'
@@ -246,8 +246,8 @@
                 'name': '27'
             }
         };
-        var headerColIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
-        var headerRowIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+        var standardIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+        var partIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
         var HEADER_ROW_BOX_HEIGHT = 100;
         var HEADER_COL_BOX_WIDTH = 200;
         var PAGE_HEIGHT = 400;
@@ -255,7 +255,7 @@
         var SCROLL_RESOLUTION_MILLISECONDS = 80;
 
         setHeaderColHeight(standardsByStandardId);
-        setHeaderRowWidth(headerRowDataById);
+        setHeaderRowWidth(partsByPartId);
         populateHeaderCol();
         populateHeaderRow();
 
@@ -277,7 +277,7 @@
             var headerColHeight = $('.header-col').height();
             var numCellsShowing = Math.round(headerColHeight / HEADER_ROW_BOX_HEIGHT);
             var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
-            populateHeaderColData(headerColIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, headerColIds.length), standardsByStandardId);
+            populateHeaderColData(standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, standardIds.length), standardsByStandardId);
         }
 
         function populateHeaderRow() {
@@ -286,34 +286,34 @@
             var headerRowWidth = $('.header-row').width();
             var numCellsShowing = Math.round(headerRowWidth / HEADER_COL_BOX_WIDTH);
             var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
-            populateHeaderRowData(headerRowIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, headerRowIds.length), headerRowDataById);
+            populateHeaderRowData(partIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, partIds.length), partsByPartId);
         }
 
-        function populateHeaderColData(headerColIds, first, last, standardsByStandardId) {
+        function populateHeaderColData(standardIds, first, last, standardsByStandardId) {
             var i, length, html = '';
 
             for (i = first; i < last; i++) {
-                html += '<div class="header-col-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + standardsByStandardId[headerColIds[i]].name + '</div>';
+                html += '<div class="header-col-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + standardsByStandardId[standardIds[i]].name + '</div>';
             }
 
             $('.header-col .canvas').html(html);
 
             for (i = first - 1; i >= Math.max(first - CELL_BUFFER_COUNT, 0) ; i--) {
-                $('.header-col .canvas').prepend('<div class="header-col-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + standardsByStandardId[headerColIds[i]].name + '</div>');
+                $('.header-col .canvas').prepend('<div class="header-col-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + standardsByStandardId[standardIds[i]].name + '</div>');
             }
         }
 
-        function populateHeaderRowData(headerRowIds, first, last, headerRowDataById) {
+        function populateHeaderRowData(partIds, first, last, partsByPartId) {
             var i, length, html = '';
 
             for (i = first; i < last; i++) {
-                html += '<div class="header-row-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + headerRowDataById[headerRowIds[i]].name + '</div>';
+                html += '<div class="header-row-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + partsByPartId[partIds[i]].name + '</div>';
             }
 
             $('.header-row .canvas').html(html);
 
             for (i = first - 1; i >= Math.max(first - CELL_BUFFER_COUNT, 0) ; i--) {
-                $('.header-row .canvas').prepend('<div class="header-row-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + headerRowDataById[headerRowIds[i]].name + '</div>');
+                $('.header-row .canvas').prepend('<div class="header-row-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + partsByPartId[partIds[i]].name + '</div>');
             }
         }
 
@@ -321,8 +321,8 @@
             $('.header-col .canvas').height(Object.keys(standardsByStandardId).length * HEADER_ROW_BOX_HEIGHT);
         }
 
-        function setHeaderRowWidth(headerRowDataById) {
-            $('.header-row .canvas').width(Object.keys(headerRowDataById).length * HEADER_COL_BOX_WIDTH);
+        function setHeaderRowWidth(partsByPartId) {
+            $('.header-row .canvas').width(Object.keys(partsByPartId).length * HEADER_COL_BOX_WIDTH);
             //$('.header-row .canvas').width(10000);
         }
 

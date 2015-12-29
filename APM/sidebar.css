@@ -61,9 +61,9 @@
     width: 200px;
     height: 100px;
     border: 1px solid black;
+    position: absolute;
 }
 
 .grid .canvas {
-    height: 5000px;
-    width: 2910px;
+    position: relative;
 }

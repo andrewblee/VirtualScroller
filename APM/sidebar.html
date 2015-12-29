@@ -10,6 +10,7 @@
     <div class="filter-section">
         <p>X-scrolled <span id="x-scroll-count">0</span> times.</p>
         <p>Y-scrolled <span id="y-scroll-count">0</span> times.</p>
+        <p>gX-scrolled <span id="gx-scroll-count">0</span> times.</p>
     </div>
     <div class="header-row">
         <div class="canvas">
@@ -250,64 +251,64 @@
         var conformancesByPartIdsByStandardId = {
             '1': {
                 '1': {
-                    'status': 'a'
+                    'status': '1'
                 },
                 '2': {
-                    'status': 'a'
+                    'status': '2'
                 },
                 '3': {
-                    'status': 'a'
+                    'status': '3'
                 },
                 '4': {
-                    'status': 'a'
+                    'status': '4'
                 },
                 '5': {
-                    'status': 'a'
+                    'status': '5'
                 },
                 '6': {
-                    'status': 'a'
+                    'status': '6'
                 },
                 '7': {
-                    'status': 'a'
+                    'status': '7'
                 },
                 '8': {
-                    'status': 'a'
+                    'status': '8'
                 },
                 '9': {
-                    'status': 'a'
+                    'status': '9'
                 },
                 '10': {
-                    'status': 'a'
+                    'status': '10'
                 },
                 '11': {
-                    'status': 'a'
+                    'status': '11'
                 },
                 '12': {
-                    'status': 'a'
+                    'status': '12'
                 },
                 '13': {
-                    'status': 'a'
+                    'status': '13'
                 },
                 '14': {
-                    'status': 'a'
+                    'status': '14'
                 },
                 '15': {
-                    'status': 'a'
+                    'status': '15'
                 },
                 '16': {
-                    'status': 'a'
+                    'status': '16'
                 },
                 '17': {
-                    'status': 'a'
+                    'status': '17'
                 },
                 '18': {
-                    'status': 'a'
+                    'status': '18'
                 },
                 '19': {
-                    'status': 'a'
+                    'status': '19'
                 },
                 '20': {
-                    'status': 'a'
+                    'status': '20'
                 }
             },
             '2': {
@@ -1934,13 +1935,23 @@
 
         setHeaderColHeight(standardsByStandardId);
         setHeaderRowWidth(partsByPartId);
+        setGridHeight(conformancesByPartIdsByStandardId);
+        setGridWidth(conformancesByPartIdsByStandardId['1']);
+
         populateStandardCol();
         populatePartRow();
+        populateConformanceRow();
 
         var x = 0;
         $('.header-row').scrolled(SCROLL_RESOLUTION_MILLISECONDS, function () {
             populatePartRow();
             $('#x-scroll-count').text(x += 1);
+        });
+
+        var gx = 0;
+        $('.grid').scrolled(SCROLL_RESOLUTION_MILLISECONDS, function () {
+            populateConformanceRow();
+            $('#gx-scroll-count').text(x += 1);
         });
 
         var y = 0;
@@ -1949,6 +1960,32 @@
             $('#y-scroll-count').text(y += 1);
         });
 
+        function getScrollBarWidth() {
+            var inner = document.createElement('p');
+            inner.style.width = "100%";
+            inner.style.height = "200px";
+
+            var outer = document.createElement('div');
+            outer.style.position = "absolute";
+            outer.style.top = "0px";
+            outer.style.left = "0px";
+            outer.style.visibility = "hidden";
+            outer.style.width = "200px";
+            outer.style.height = "150px";
+            outer.style.overflow = "hidden";
+            outer.appendChild(inner);
+
+            document.body.appendChild(outer);
+            var w1 = inner.offsetWidth;
+            outer.style.overflow = 'scroll';
+            var w2 = inner.offsetWidth;
+            if (w1 == w2) w2 = outer.clientWidth;
+
+            document.body.removeChild(outer);
+
+            return (w1 - w2);
+        };
+
         function populateStandardCol() {
             var scrollAmount = $('.header-col').scrollTop();
             var firstCell = Math.floor(scrollAmount / HEADER_ROW_BOX_HEIGHT);
@@ -1956,6 +1993,15 @@
             var numCellsShowing = Math.round(headerColHeight / HEADER_ROW_BOX_HEIGHT);
             var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
             populateStandardData(standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, standardIds.length), standardsByStandardId);
+        }
+
+        function populateConformanceRow() {
+            var scrollAmount = $('.grid').scrollLeft();
+            var firstCell = Math.floor(scrollAmount / HEADER_COL_BOX_WIDTH);
+            var headerRowWidth = $('.grid').width();
+            var numCellsShowing = Math.round(headerRowWidth / HEADER_COL_BOX_WIDTH);
+            var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
+            populateConformanceRowData(partIdsByStandardId['1'], firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, partIdsByStandardId['1'].length), conformancesByPartIdsByStandardId['1']);
         }
 
         function populatePartRow() {
@@ -1981,6 +2027,21 @@
             }
         }
 
+        function populateConformanceRowData(partIds, first, last, conformancesByPartIds) {
+            var i, length, html = '';
+
+            for (i = first; i < last; i++) {
+                html += '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
+            }
+
+            $('.grid .canvas').html(html);
+
+            for (i = first - 1; i >= Math.max(first - CELL_BUFFER_COUNT, 0) ; i--) {
+                var test = '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
+                $('.grid .canvas').prepend(test);
+            }
+        }
+
         function populatePartData(partIds, first, last, partsByPartId) {
             var i, length, html = '';
 
@@ -1995,13 +2056,21 @@
             }
         }
 
+        function setGridHeight(conformancesByPartIdsByStandardId) {
+            $('.grid .canvas').height(Object.keys(conformancesByPartIdsByStandardId).length * HEADER_ROW_BOX_HEIGHT);
+        }
+
         function setHeaderColHeight(standardsByStandardId) {
             $('.header-col .canvas').height(Object.keys(standardsByStandardId).length * HEADER_ROW_BOX_HEIGHT);
         }
 
+        function setGridWidth(conformancesByPartIds) {
+            var test = Object.keys(conformancesByPartIds).length * HEADER_COL_BOX_WIDTH;
+            $('.grid .canvas').width(test);
+        }
+
         function setHeaderRowWidth(partsByPartId) {
-            $('.header-row .canvas').width(Object.keys(partsByPartId).length * HEADER_COL_BOX_WIDTH);
-            //$('.header-row .canvas').width(10000);
+            $('.header-row .canvas').width(Object.keys(partsByPartId).length * HEADER_COL_BOX_WIDTH + getScrollBarWidth());
         }
 
         $(document).keydown(function (e) {

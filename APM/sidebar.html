@@ -1934,40 +1934,40 @@
 
         setHeaderColHeight(standardsByStandardId);
         setHeaderRowWidth(partsByPartId);
-        populateHeaderCol();
-        populateHeaderRow();
+        populateStandardCol();
+        populatePartRow();
 
         var x = 0;
         $('.header-row').scrolled(SCROLL_RESOLUTION_MILLISECONDS, function () {
-            populateHeaderRow();
+            populatePartRow();
             $('#x-scroll-count').text(x += 1);
         });
 
         var y = 0;
         $('.header-col').scrolled(SCROLL_RESOLUTION_MILLISECONDS, function () {
-            populateHeaderCol();
+            populateStandardCol();
             $('#y-scroll-count').text(y += 1);
         });
 
-        function populateHeaderCol() {
+        function populateStandardCol() {
             var scrollAmount = $('.header-col').scrollTop();
             var firstCell = Math.floor(scrollAmount / HEADER_ROW_BOX_HEIGHT);
             var headerColHeight = $('.header-col').height();
             var numCellsShowing = Math.round(headerColHeight / HEADER_ROW_BOX_HEIGHT);
             var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
-            populateHeaderColData(standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, standardIds.length), standardsByStandardId);
+            populateStandardData(standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, standardIds.length), standardsByStandardId);
         }
 
-        function populateHeaderRow() {
+        function populatePartRow() {
             var scrollAmount = $('.header-row').scrollLeft();
             var firstCell = Math.floor(scrollAmount / HEADER_COL_BOX_WIDTH);
             var headerRowWidth = $('.header-row').width();
             var numCellsShowing = Math.round(headerRowWidth / HEADER_COL_BOX_WIDTH);
             var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
-            populateHeaderRowData(partIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, partIds.length), partsByPartId);
+            populatePartData(partIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, partIds.length), partsByPartId);
         }
 
-        function populateHeaderColData(standardIds, first, last, standardsByStandardId) {
+        function populateStandardData(standardIds, first, last, standardsByStandardId) {
             var i, length, html = '';
 
             for (i = first; i < last; i++) {
@@ -1981,7 +1981,7 @@
             }
         }
 
-        function populateHeaderRowData(partIds, first, last, partsByPartId) {
+        function populatePartData(partIds, first, last, partsByPartId) {
             var i, length, html = '';
 
             for (i = first; i < last; i++) {

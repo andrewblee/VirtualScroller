@@ -107,7 +107,7 @@
             '20': {
                 'id': 20,
                 'name': '20'
-            },
+            }/*,
             '21': {
                 'id': 21,
                 'name': '21'
@@ -135,7 +135,7 @@
             '27': {
                 'id': 27,
                 'name': '27'
-            }
+            }*/
         };
         var partsByPartId = {
             '1': {
@@ -1925,7 +1925,7 @@
             }
         };
 
-        var standardIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
+        var standardIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];//, 21, 22, 23, 24, 25, 26, 27];
         var partIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
         var HEADER_ROW_BOX_HEIGHT = 100;
         var HEADER_COL_BOX_WIDTH = 200;
@@ -1933,10 +1933,10 @@
         var CELL_BUFFER_COUNT = 4;
         var SCROLL_RESOLUTION_MILLISECONDS = 80;
 
-        setHeaderColHeight(standardsByStandardId);
-        setHeaderRowWidth(partsByPartId);
-        setGridHeight(conformancesByPartIdsByStandardId);
-        setGridWidth(conformancesByPartIdsByStandardId['1']);
+        setHeaderColHeight(standardIds);
+        setHeaderRowWidth(partIds);
+        setGridHeight(standardIds);
+        setGridWidth(partIds);
 
         populateStandardCol();
         populatePartRow();
@@ -1995,26 +1995,52 @@
             populateStandardData(standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, standardIds.length), standardsByStandardId);
         }
 
+        /* SINGLE ROW WORKING */
+        //function populateConformanceGrid() {
+        //    var horizontalScrollAmount = $('.grid').scrollLeft();
+        //    var firstRowCell = Math.floor(horizontalScrollAmount / HEADER_COL_BOX_WIDTH);
+        //    var headerRowWidth = $('.grid').width();
+        //    var numRowCellsShowing = Math.round(headerRowWidth / HEADER_COL_BOX_WIDTH);
+        //    var numRowCellsShowingPlusBuffer = numRowCellsShowing + CELL_BUFFER_COUNT;
+        //    populateConformanceGridData(partIds, firstRowCell, Math.min(firstRowCell + numRowCellsShowingPlusBuffer + 1, partIds.length), conformancesByPartIdsByStandardId['1']);
+        //}
+
+        //function populateConformanceGridData(partIds, firstPartId, lastPartId, conformancesByPartIds) {
+        //    var i, length, html = '';
+
+        //    for (i = firstPartId; i < lastPartId; i++) {
+        //        html += '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
+        //    }
+
+        //    $('.grid .canvas').html(html);
+
+        //    for (i = firstPartId - 1; i >= Math.max(firstPartId - CELL_BUFFER_COUNT, 0) ; i--) {
+        //        var test = '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
+        //        $('.grid .canvas').prepend(test);
+        //    }
+        //}
+
         function populateConformanceGrid() {
-            var scrollAmount = $('.grid').scrollLeft();
-            var firstCell = Math.floor(scrollAmount / HEADER_COL_BOX_WIDTH);
-            var headerRowWidth = $('.grid').width();
-            var numCellsShowing = Math.round(headerRowWidth / HEADER_COL_BOX_WIDTH);
-            var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
-            populateConformanceGridData(partIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, partIds.length), conformancesByPartIdsByStandardId['1']);
+            var verticalScrollAmount = $('.grid').scrollTop();
+            var firstColCell = Math.floor(verticalScrollAmount / HEADER_ROW_BOX_HEIGHT);
+            var headerColHeight = $('.grid').height();
+            var numColCellsShowing = Math.round(headerColHeight / HEADER_ROW_BOX_HEIGHT);
+            var numColCellsShowingPlusBuffer = numColCellsShowing + CELL_BUFFER_COUNT;
+
+            populateConformanceGridData(standardIds, firstColCell, Math.min(firstColCell + numColCellsShowingPlusBuffer + 1, standardIds.length), conformancesByPartIdsByStandardId['1']);
         }
 
-        function populateConformanceGridData(partIds, firstPartId, lastPartId, conformancesByPartIds) {
+        function populateConformanceGridData(standardIds, firstStandardId, lastStandardId, conformancesByPartIds) {
             var i, length, html = '';
 
-            for (i = firstPartId; i < lastPartId; i++) {
-                html += '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
+            for (i = firstStandardId; i < lastStandardId; i++) {
+                html += '<div class="grid-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + conformancesByPartIds[standardIds[i]].status + '</div>';
             }
 
             $('.grid .canvas').html(html);
 
-            for (i = firstPartId - 1; i >= Math.max(firstPartId - CELL_BUFFER_COUNT, 0) ; i--) {
-                var test = '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
+            for (i = firstStandardId - 1; i >= Math.max(firstStandardId - CELL_BUFFER_COUNT, 0) ; i--) {
+                var test = '<div class="grid-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + conformancesByPartIds[standardIds[i]].status + '</div>';
                 $('.grid .canvas').prepend(test);
             }
         }
@@ -2056,21 +2082,20 @@
             }
         }
 
-        function setGridHeight(conformancesByPartIdsByStandardId) {
-            $('.grid .canvas').height(Object.keys(conformancesByPartIdsByStandardId).length * HEADER_ROW_BOX_HEIGHT);
+        function setGridHeight(standardIds) {
+            $('.grid .canvas').height(standardIds.length * HEADER_ROW_BOX_HEIGHT);
         }
 
-        function setHeaderColHeight(standardsByStandardId) {
-            $('.header-col .canvas').height(Object.keys(standardsByStandardId).length * HEADER_ROW_BOX_HEIGHT);
+        function setHeaderColHeight(standardIds) {
+            $('.header-col .canvas').height(standardIds.length * HEADER_ROW_BOX_HEIGHT + +getScrollBarWidth());
         }
 
-        function setGridWidth(conformancesByPartIds) {
-            var test = Object.keys(conformancesByPartIds).length * HEADER_COL_BOX_WIDTH;
-            $('.grid .canvas').width(test);
+        function setGridWidth(partIds) {
+            $('.grid .canvas').width(partIds.length * HEADER_COL_BOX_WIDTH);
         }
 
-        function setHeaderRowWidth(partsByPartId) {
-            $('.header-row .canvas').width(Object.keys(partsByPartId).length * HEADER_COL_BOX_WIDTH + getScrollBarWidth());
+        function setHeaderRowWidth(partIds) {
+            $('.header-row .canvas').width(partIds.length * HEADER_COL_BOX_WIDTH + getScrollBarWidth());
         }
 
         $(document).keydown(function (e) {

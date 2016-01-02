@@ -2009,7 +2009,6 @@
             var numColCellsShowing = Math.round(headerColHeight / HEADER_ROW_BOX_HEIGHT);
             var numColCellsShowingPlusBuffer = numColCellsShowing + CELL_BUFFER_COUNT;
 
-            //populateConformanceGridData(partIds, firstRowCell, Math.min(firstRowCell + numRowCellsShowingPlusBuffer + 1, partIds.length), conformancesByPartIdsByStandardId['1']);
             populateConformanceGridData(partIds, firstRowCell, Math.min(firstRowCell + numRowCellsShowingPlusBuffer + 1, partIds.length), standardIds, firstColCell, Math.min(firstColCell + numColCellsShowingPlusBuffer + 1, standardIds.length), conformancesByPartIdsByStandardId);
         }
 
@@ -2023,47 +2022,15 @@
             }
 
             $('.grid .canvas').html(html);
+
+            // Above
+            html = '';
+            for (i = firstStandardId - 1; i >= Math.max(firstStandardId - CELL_BUFFER_COUNT, 0); i--) {
+                for (j = firstPartId; j < lastPartId; j++) {
+                    $('.grid .canvas').prepend('<div class="grid-box" style="left:' + j * HEADER_COL_BOX_WIDTH + 'px; top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + conformancesByPartIdsByStandardId[standardIds[i]][partIds[j]].status + '</div>');
+                }
+            }
         }
-
-        //function populateConformanceGridData(partIds, firstPartId, lastPartId, conformancesByPartIds) {
-        //    var i, html = '';
-
-        //    for (i = firstPartId; i < lastPartId; i++) {
-        //        html += '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
-        //    }
-
-        //    $('.grid .canvas').html(html);
-
-        //    for (i = firstPartId - 1; i >= Math.max(firstPartId - CELL_BUFFER_COUNT, 0) ; i--) {
-        //        var test = '<div class="grid-box" style="left:' + i * HEADER_COL_BOX_WIDTH + 'px">' + conformancesByPartIds[partIds[i]].status + '</div>';
-        //        $('.grid .canvas').prepend(test);
-        //    }
-        //}
-
-        //function populateConformanceGrid() {
-        //    var verticalScrollAmount = $('.grid').scrollTop();
-        //    var firstColCell = Math.floor(verticalScrollAmount / HEADER_ROW_BOX_HEIGHT);
-        //    var headerColHeight = $('.grid').height();
-        //    var numColCellsShowing = Math.round(headerColHeight / HEADER_ROW_BOX_HEIGHT);
-        //    var numColCellsShowingPlusBuffer = numColCellsShowing + CELL_BUFFER_COUNT;
-
-        //    populateConformanceGridData(standardIds, firstColCell, Math.min(firstColCell + numColCellsShowingPlusBuffer + 1, standardIds.length), conformancesByPartIdsByStandardId['1']);
-        //}
-
-        //function populateConformanceGridData(standardIds, firstStandardId, lastStandardId, conformancesByPartIds) {
-        //    var i, length, html = '';
-
-        //    for (i = firstStandardId; i < lastStandardId; i++) {
-        //        html += '<div class="grid-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + conformancesByPartIds[standardIds[i]].status + '</div>';
-        //    }
-
-        //    $('.grid .canvas').html(html);
-
-        //    for (i = firstStandardId - 1; i >= Math.max(firstStandardId - CELL_BUFFER_COUNT, 0) ; i--) {
-        //        var test = '<div class="grid-box" style="top:' + i * HEADER_ROW_BOX_HEIGHT + 'px">' + conformancesByPartIds[standardIds[i]].status + '</div>';
-        //        $('.grid .canvas').prepend(test);
-        //    }
-        //}
 
         function populatePartRow() {
             var scrollAmount = $('.header-row').scrollLeft();

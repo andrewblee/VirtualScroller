@@ -34,7 +34,6 @@
     <Content Include="scripts\angular-route.js" />
     <Content Include="scripts\angular.js" />
     <Content Include="scripts\jquery-2.1.4.js" />
-    <Content Include="scripts\scrolled.js" />
     <Content Include="styles\bootstrap.css" />
     <Content Include="virtualScroller.js" />
     <Content Include="web.config" />

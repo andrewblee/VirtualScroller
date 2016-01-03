@@ -13,6 +13,10 @@ var app;
             templateUrl: "/app/products/productDetailView.html",
             controller: "ProductDetailCtrl as vm"
         })
+            .when("/directiveTest", {
+            templateUrl: "directiveTest.html",
+            controller: "VirtualScrollColumnCtrl as vm"
+        })
             .otherwise("/productList");
     }
 })(app || (app = {}));

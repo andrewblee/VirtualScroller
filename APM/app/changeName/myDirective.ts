@@ -1,0 +1,45 @@
+﻿module app {
+    'use strict';
+    export interface IAppCtrlScope extends ng.IScope {
+        greeting: string;
+        changeName(name): void;
+    }
+
+    class MyDirective {
+        public link: ($scope: IAppCtrlScope, element: JQuery, attributes) => void;
+        public templateUrl = 'app/changeName/template.html';
+        public scope = false;
+        public restrict = 'AE';
+
+        constructor() {
+            MyDirective.prototype.link = ($scope: IAppCtrlScope, element: JQuery, attributes) => {
+                element.on('mouseenter', function () {
+                    element.addClass('animate');
+                })
+                    .on('mouseleave', function () {
+                        element.removeClass('animate');
+                    })
+                    .on('click', function () {
+                        var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
+                        $scope.changeName(name + ' from my directive');
+                        $scope.$apply();
+                    });
+            };
+        }
+
+        public static Factory() {
+            var directive = () => {
+                return new MyDirective();
+            };
+
+            directive['$inject'] = [];
+
+            return directive;
+        }
+    }
+
+
+    angular
+        .module("productManagement")
+        .directive("myDirective", MyDirective.Factory());
+}

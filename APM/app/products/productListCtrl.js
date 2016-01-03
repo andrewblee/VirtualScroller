@@ -10,7 +10,7 @@ var app;
                 this.title = "Product List";
                 this.showImage = false;
                 this.products = [];
-                this.append = "hello this is uiDataProvider speaking";
+                this.append = "hello this is append speaking";
                 var productResource = dataAccessService.getProductResource();
                 productResource.query(function (data) {
                     _this.products = data;

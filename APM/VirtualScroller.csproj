@@ -26,7 +26,9 @@
     <Content Include="app\products\productDetailView.html" />
     <Content Include="app\products\productListView.html" />
     <Content Include="data.js" />
+    <Content Include="directiveTest.html" />
     <Content Include="scripts\scrolled.js" />
+    <Content Include="directiveTest.css" />
     <Content Include="sidebar.css" />
     <Content Include="sidebar.html" />
     <Content Include="index.html" />

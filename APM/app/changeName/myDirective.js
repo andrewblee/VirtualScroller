@@ -4,7 +4,9 @@ var app;
     var MyDirective = (function () {
         function MyDirective() {
             this.templateUrl = 'app/changeName/template.html';
-            this.scope = false;
+            this.scope = {
+                uiDataProvider: '='
+            };
             this.restrict = 'AE';
             MyDirective.prototype.link = function ($scope, element, attributes) {
                 element.on('mouseenter', function () {
@@ -15,9 +17,12 @@ var app;
                 })
                     .on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
-                    $scope.changeName(name + ' from my directive');
+                    changeName(name);
                     $scope.$apply();
                 });
+                function changeName(name) {
+                    $scope.greeting = 'Hello ' + name + ' ! ' + $scope.uiDataProvider;
+                }
             };
         }
         MyDirective.Factory = function () {

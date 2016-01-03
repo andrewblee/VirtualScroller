@@ -3,28 +3,27 @@ module app.productList {
 		title: string;
 		showImage: boolean;
 		products: app.domain.IProduct[];
-		toggleImage(): void;
+        toggleImage(): void;
+        append: string;
     }
 	
 	class ProductListCtrl implements IProductListModel {
 		title: string;
 		showImage: boolean;
-		products: app.domain.IProduct[];
+        products: app.domain.IProduct[];
+        append: string;
 		
         static $inject = ["dataAccessService", '$scope'];
         constructor(private dataAccessService: app.common.DataAccessService, private $scope: IAppCtrlScope) {
 			this.title = "Product List";
 			this.showImage = false;
-			this.products = [];
+            this.products = [];
+            this.append = "hello this is uiDataProvider speaking";
 			
 			var productResource = dataAccessService.getProductResource();
 			productResource.query((data: app.domain.IProduct[]) => {
 				this.products = data;
             });
-
-            $scope.changeName = (name) => {
-                $scope.greeting = 'Hello ' + name + ' !';
-            }
 		}
 		
 		toggleImage(): void {

@@ -10,13 +10,11 @@ var app;
                 this.title = "Product List";
                 this.showImage = false;
                 this.products = [];
+                this.append = "hello this is uiDataProvider speaking";
                 var productResource = dataAccessService.getProductResource();
                 productResource.query(function (data) {
                     _this.products = data;
                 });
-                $scope.changeName = function (name) {
-                    $scope.greeting = 'Hello ' + name + ' !';
-                };
             }
             ProductListCtrl.prototype.toggleImage = function () {
                 this.showImage = !this.showImage;

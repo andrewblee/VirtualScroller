@@ -8,7 +8,7 @@
 
         static $inject = ['$scope'];
         constructor(private $scope: IVirtualScrollColumnScope) {
-            this.append = "hello this is append speaking";
+            this.append = "hello this is append FROM VIRTUAL SCROLL speaking";
         }
     }
     angular

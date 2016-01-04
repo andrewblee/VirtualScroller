@@ -3,7 +3,7 @@ var app;
     var VirtualScrollColumnCtrl = (function () {
         function VirtualScrollColumnCtrl($scope) {
             this.$scope = $scope;
-            this.append = "hello this is append speaking";
+            this.append = "hello this is append FROM VIRTUAL SCROLL speaking";
         }
         VirtualScrollColumnCtrl.$inject = ['$scope'];
         return VirtualScrollColumnCtrl;

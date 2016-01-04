@@ -2,18 +2,19 @@
     'use strict';
     export interface IVirtualScrollColumnScope extends ng.IScope {
         uiDataProvider: string;
+        greeting: string;
     }
 
-    class MyDirective {
+    class VirtualScrollColumn {
         public link: ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => void;
-        public templateUrl = 'directives/virtualScrollColumn/virtual-scroll-column.html';
+        public templateUrl = 'app/directiveTest/virtual-scroll-column.html';
         public scope = {
             uiDataProvider: '='
         };
         public restrict = 'AE';
 
         constructor() {
-            MyDirective.prototype.link = ($scope: IAppCtrlScope, element: JQuery, attributes) => {
+            VirtualScrollColumn.prototype.link = ($scope: IAppCtrlScope, element: JQuery, attributes) => {
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);
@@ -28,7 +29,7 @@
 
         public static Factory() {
             var directive = () => {
-                return new MyDirective();
+                return new VirtualScrollColumn();
             };
 
             directive['$inject'] = [];
@@ -39,5 +40,5 @@
 
     angular
         .module("productManagement")
-        .directive("myDirective", MyDirective.Factory());
+        .directive("virtualScrollColumn", VirtualScrollColumn.Factory());
 }

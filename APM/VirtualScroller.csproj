@@ -26,7 +26,7 @@
     <Content Include="app\products\productDetailView.html" />
     <Content Include="app\products\productListView.html" />
     <Content Include="data.js" />
-    <Content Include="directives\virtualScrollColumn\virtual-scroll-column.html" />
+    <Content Include="app\directiveTest\virtual-scroll-column.html" />
     <Content Include="app\directiveTest\directiveTest.html" />
     <Content Include="scripts\scrolled.js" />
     <Content Include="sidebar.css" />
@@ -49,12 +49,9 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
-    <TypeScriptCompile Include="app\changeName\changeName.ts" />
     <TypeScriptCompile Include="app\changeName\myDirective.ts" />
     <TypeScriptCompile Include="app\common\services\common.services.ts" />
     <TypeScriptCompile Include="app\common\services\dataAccessService.ts" />
@@ -63,7 +60,7 @@
     <TypeScriptCompile Include="app\products\productDetailCtrl.ts" />
     <TypeScriptCompile Include="app\products\productListCtrl.ts" />
     <TypeScriptCompile Include="app\directiveTest\virtualScrollColumnCtrl.ts" />
-    <TypeScriptCompile Include="directives\virtualScrollColumn\virtualScrollColumn.ts" />
+    <TypeScriptCompile Include="app\directiveTest\virtualScrollColumn.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-mocks.d.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-resource.d.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-route.d.ts" />

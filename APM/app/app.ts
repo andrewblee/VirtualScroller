@@ -18,7 +18,7 @@ module app {
             })
             .when("/directiveTest",
             {
-                templateUrl: "directiveTest.html",
+                templateUrl: "/app/directiveTest/directiveTest.html",
                 controller: "VirtualScrollColumnCtrl as vm"
             })
             .otherwise("/productList");

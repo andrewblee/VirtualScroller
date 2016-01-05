@@ -5,21 +5,12 @@
     <title>Acme Product Management</title>
 
     <!-- Style sheets -->
+    <link href="sidebar.css" rel="stylesheet" />
     <link href="styles/bootstrap.css" rel="stylesheet" />
 </head>
 
 <body ng-app="productManagement">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <div class="navbar-brand">Acme Product Management</div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <ng-view></ng-view>
-    </div>
+    <ng-view></ng-view>
 
     <!-- Library Scripts -->
     <script src="scripts/jquery-2.1.4.js"></script>

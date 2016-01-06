@@ -1,8 +1,18 @@
 ﻿module app {
     'use strict';
+    export interface IStandard {
+        id: number,
+        name: string
+    }
+
+    export interface IStandardsById {
+        [id: number] : IStandard
+    }
+
     export interface IVirtualScrollColumnScope extends ng.IScope {
         uiDataProvider: string;
         greeting: string;
+        standardsById: IStandardsById;
     }
 
     class VirtualScrollColumn {
@@ -14,7 +24,7 @@
         public restrict = 'AE';
 
         constructor() {
-            VirtualScrollColumn.prototype.link = ($scope: IAppCtrlScope, element: JQuery, attributes) => {
+            VirtualScrollColumn.prototype.link = ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);

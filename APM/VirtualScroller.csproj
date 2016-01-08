@@ -54,6 +54,7 @@
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\changeName\myDirective.ts" />
     <TypeScriptCompile Include="app\common\services\common.services.ts" />
+    <TypeScriptCompile Include="app\common\services\standardService.ts" />
     <TypeScriptCompile Include="app\common\services\dataAccessService.ts" />
     <TypeScriptCompile Include="app\common\services\productResourceMock.ts" />
     <TypeScriptCompile Include="app\products\product.ts" />

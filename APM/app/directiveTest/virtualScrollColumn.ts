@@ -19,7 +19,8 @@
         public link: ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => void;
         public templateUrl = 'app/directiveTest/virtual-scroll-column.html';
         public scope = {
-            uiDataProvider: '='
+            uiDataProvider: '=',
+            standardsById: '='
         };
         public restrict = 'AE';
 

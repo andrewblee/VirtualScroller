@@ -5,7 +5,8 @@ var app;
         function VirtualScrollColumn() {
             this.templateUrl = 'app/directiveTest/virtual-scroll-column.html';
             this.scope = {
-                uiDataProvider: '='
+                uiDataProvider: '=',
+                standardsById: '='
             };
             this.restrict = 'AE';
             VirtualScrollColumn.prototype.link = function ($scope, element, attributes) {

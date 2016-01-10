@@ -5,18 +5,21 @@ var app;
         function VirtualScrollColumn() {
             this.templateUrl = 'app/directiveTest/virtual-scroll-column.html';
             this.scope = {
-                uiDataProvider: '=',
+                appendString: '=',
                 standardsById: '='
             };
             this.restrict = 'AE';
             VirtualScrollColumn.prototype.link = function ($scope, element, attributes) {
+                $scope.style = {
+                    'height': '4000px'
+                };
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);
                     $scope.$apply();
                 });
                 function changeName(name) {
-                    $scope.greeting = 'Hello ' + name + ' ! ' + $scope.uiDataProvider;
+                    $scope.greeting = 'Hello ' + name + ' ! ' + $scope.appendString;
                 }
             };
         }

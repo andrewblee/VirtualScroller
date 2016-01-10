@@ -6,7 +6,12 @@ var app;
             this.standardService = standardService;
             var that = this;
             this.append = "hello this is append FROM VIRTUAL SCROLL speaking";
+            this.cellHeight = 100;
             getStandardsById();
+            getStandardIds();
+            function getStandardIds() {
+                that.standardIds = standardService.getStandardIds();
+            }
             function getStandardsById() {
                 that.standardsById = standardService.getStandardsById();
             }

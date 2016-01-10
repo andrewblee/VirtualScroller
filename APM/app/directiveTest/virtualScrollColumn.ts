@@ -13,7 +13,9 @@
         appendString: string;
         greeting: string;
         standardsById: IStandardsById;
+        standardIds: number[];
         style: {};
+        cellHeight: number;
     }
 
     class VirtualScrollColumn {
@@ -21,21 +23,29 @@
         public templateUrl = 'app/directiveTest/virtual-scroll-column.html';
         public scope = {
             appendString: '=',
-            standardsById: '='
+            standardsById: '=',
+            standardIds: '=',
+            cellHeight: '='
         };
         public restrict = 'AE';
 
         constructor() {
             VirtualScrollColumn.prototype.link = ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {
-                $scope.style = {
-                    'height': '4000px'
-                }
+                setCanvasHeight();
 
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);
                     $scope.$apply();
                 });
+
+                function setCanvasHeight() {
+                    if ($scope.standardIds) {
+                        $scope.style = {
+                            'height': $scope.standardIds.length * $scope.cellHeight + 'px'
+                        }
+                    }
+                }
 
                 function changeName(name) {
                     $scope.greeting = 'Hello ' + name + ' ! ' + $scope.appendString;

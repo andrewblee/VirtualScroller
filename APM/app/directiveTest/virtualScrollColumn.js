@@ -6,18 +6,25 @@ var app;
             this.templateUrl = 'app/directiveTest/virtual-scroll-column.html';
             this.scope = {
                 appendString: '=',
-                standardsById: '='
+                standardsById: '=',
+                standardIds: '=',
+                cellHeight: '='
             };
             this.restrict = 'AE';
             VirtualScrollColumn.prototype.link = function ($scope, element, attributes) {
-                $scope.style = {
-                    'height': '4000px'
-                };
+                setCanvasHeight();
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);
                     $scope.$apply();
                 });
+                function setCanvasHeight() {
+                    if ($scope.standardIds) {
+                        $scope.style = {
+                            'height': $scope.standardIds.length * $scope.cellHeight + 'px'
+                        };
+                    }
+                }
                 function changeName(name) {
                     $scope.greeting = 'Hello ' + name + ' ! ' + $scope.appendString;
                 }

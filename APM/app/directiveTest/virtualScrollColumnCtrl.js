@@ -5,7 +5,6 @@ var app;
             this.$scope = $scope;
             this.standardService = standardService;
             var that = this;
-            this.append = "hello this is append FROM VIRTUAL SCROLL speaking";
             this.cellHeight = 100;
             getStandardsById();
             getStandardIds();

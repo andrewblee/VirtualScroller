@@ -16,6 +16,7 @@
         standardIds: number[];
         style: {};
         cellHeight: number;
+        standards: IStandard[];
     }
 
     class VirtualScrollColumn {
@@ -27,16 +28,24 @@
             standardIds: '=',
             cellHeight: '='
         };
-        public restrict = 'AE';
+        public restrict = 'E';
 
         constructor() {
             VirtualScrollColumn.prototype.link = ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {
                 setCanvasHeight();
 
+                let html = '';
+                for (let i = 0, length = $scope.standardIds.length; i < length; i++) {
+                    html += '<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.standardsById[$scope.standardIds[i]].name + '</div>';
+                }
+
+                element.find('.header-col').html(html);
+
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);
                     $scope.$apply();
+                    //console.log('scrollTop: ' + element.scrollTop());
                 });
 
                 function setCanvasHeight() {

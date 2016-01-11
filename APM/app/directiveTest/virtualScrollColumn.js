@@ -10,13 +10,19 @@ var app;
                 standardIds: '=',
                 cellHeight: '='
             };
-            this.restrict = 'AE';
+            this.restrict = 'E';
             VirtualScrollColumn.prototype.link = function ($scope, element, attributes) {
                 setCanvasHeight();
+                var html = '';
+                for (var i = 0, length_1 = $scope.standardIds.length; i < length_1; i++) {
+                    html += '<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.standardsById[$scope.standardIds[i]].name + '</div>';
+                }
+                element.find('.header-col').html(html);
                 element.on('click', function () {
                     var name = JSON.parse(JSON.stringify(prompt('Please enter your name:'))); // encode input to avoid escaping character
                     changeName(name);
                     $scope.$apply();
+                    //console.log('scrollTop: ' + element.scrollTop());
                 });
                 function setCanvasHeight() {
                     if ($scope.standardIds) {

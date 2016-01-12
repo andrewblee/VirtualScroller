@@ -29,22 +29,40 @@
 
         constructor() {
             VirtualScrollColumn.prototype.link = ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {
-                setCanvasHeight();
+                let CELL_BUFFER_COUNT = 3;
+                let SCROLL_RESOLUTION_MILLISECONDS = 80;
+                let $headerCol = element.find('.header-col');
+                let $canvas = element.find('.canvas');
 
-                (<any>element.find('.header-col')).scrolled(80, function () {
-                    console.log('hello from scrolled');
+                setCanvasHeight();
+                populateStandardCol();
+
+                (<any>element.find('.header-col')).scrolled(SCROLL_RESOLUTION_MILLISECONDS, function () {
+                    populateStandardCol();
                 });
 
-                let html = '';
-                for (let i = 0, length = $scope.standardIds.length; i < length; i++) {
-                    html += '<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.standardsById[$scope.standardIds[i]].name + '</div>';
+                function populateStandardCol() {
+                    var scrollAmount = $('.header-col').scrollTop();
+                    var firstCell = Math.floor(scrollAmount / $scope.cellHeight);
+                    var headerColHeight = $('.header-col').height();
+                    var numCellsShowing = Math.round(headerColHeight / $scope.cellHeight);
+                    var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
+                    populateStandardData($scope.standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, $scope.standardIds.length), $scope.standardsById);
                 }
 
-                element.find('.header-col').html(html);
+                function populateStandardData(standardIds, first, last, standardsById) {
+                    var i, length, html = '';
 
-                element.on('click', function () {
-                    $scope.$apply();
-                });
+                    for (i = first; i < last; i++) {
+                        html += '<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + standardsById[standardIds[i]].name + '</div>';
+                    }
+
+                    $canvas.html(html);
+
+                    for (i = first - 1; i >= Math.max(first - CELL_BUFFER_COUNT, 0); i--) {
+                        $canvas.prepend('<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.standardsById[standardIds[i]].name + '</div>');
+                    }
+                }
 
                 function setCanvasHeight() {
                     if ($scope.standardIds) {

@@ -5,10 +5,6 @@
         name: string
     }
 
-    export interface IStandardsById {
-        [id: number] : IStandard
-    }
-
     export interface IDictionary<T> {
         [key: string]: T;
     }

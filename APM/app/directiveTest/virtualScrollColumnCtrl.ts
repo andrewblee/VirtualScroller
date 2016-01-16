@@ -1,12 +1,12 @@
 ﻿module app {
     interface IVirtualScrollColumnModel {
-        standardsById: app.IStandardsById;
+        standardsById: common.IStandardsById;
         standardIds: number[];
         cellHeight: number;
     }
 
     class VirtualScrollColumnCtrl implements IVirtualScrollColumnModel {
-        standardsById: app.IStandardsById;
+        standardsById: common.IStandardsById;
         standardIds: number[];
         cellHeight: number;
 

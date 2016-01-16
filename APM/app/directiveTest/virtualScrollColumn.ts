@@ -9,8 +9,12 @@
         [id: number] : IStandard
     }
 
+    export interface IDictionary<T> {
+        [key: string]: T;
+    }
+
     export interface IVirtualScrollColumnScope extends ng.IScope {
-        standardsById: IStandardsById;
+        data: IDictionary<any>;
         standardIds: number[];
         style: {};
         cellHeight: number;
@@ -21,7 +25,7 @@
         public link: ($scope: IVirtualScrollColumnScope, element: JQuery, attributes) => void;
         public templateUrl = 'app/directiveTest/virtual-scroll-column.html';
         public scope = {
-            standardsById: '=',
+            data: '=',
             standardIds: '=',
             cellHeight: '='
         };
@@ -47,20 +51,20 @@
                     var headerColHeight = $('.header-col').height();
                     var numCellsShowing = Math.round(headerColHeight / $scope.cellHeight);
                     var numCellsShowingPlusBuffer = numCellsShowing + CELL_BUFFER_COUNT;
-                    populateStandardData($scope.standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, $scope.standardIds.length), $scope.standardsById);
+                    populateStandardData($scope.standardIds, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, $scope.standardIds.length), $scope.data);
                 }
 
-                function populateStandardData(standardIds, first, last, standardsById) {
+                function populateStandardData(standardIds, first, last, data) {
                     var i, length, html = '';
 
                     for (i = first; i < last; i++) {
-                        html += '<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + standardsById[standardIds[i]].name + '</div>';
+                        html += '<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + data[standardIds[i]].name + '</div>';
                     }
 
                     $canvas.html(html);
 
                     for (i = first - 1; i >= Math.max(first - CELL_BUFFER_COUNT, 0); i--) {
-                        $canvas.prepend('<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.standardsById[standardIds[i]].name + '</div>');
+                        $canvas.prepend('<div class="header-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.data[standardIds[i]].name + '</div>');
                     }
                 }
 

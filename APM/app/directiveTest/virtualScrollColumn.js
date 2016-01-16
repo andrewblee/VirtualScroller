@@ -7,14 +7,14 @@ var app;
             this.scope = {
                 data: '=',
                 cellHeight: '=',
-                cellBuffer: '=',
+                buffer: '=',
                 delayInMilliseconds: '='
             };
             this.restrict = 'E';
             VirtualScrollColumn.prototype.link = function ($scope, element, attributes) {
-                var DEFAULT_CELL_BUFFER = 3;
+                var DEFAULT_BUFFER = 3;
                 var DEFAULT_DELAY_IN_MILLISECONDS = 80;
-                $scope.cellBuffer = $scope.cellBuffer || DEFAULT_CELL_BUFFER;
+                $scope.buffer = $scope.buffer || DEFAULT_BUFFER;
                 $scope.delayInMilliSeconds = $scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
                 validateScope();
                 var keys = Object.keys($scope.data);
@@ -30,17 +30,20 @@ var app;
                     var firstCell = Math.floor(scrollAmount / $scope.cellHeight);
                     var headerColHeight = $headerCol.height();
                     var numCellsShowing = Math.round(headerColHeight / $scope.cellHeight);
-                    var numCellsShowingPlusBuffer = numCellsShowing + $scope.cellBuffer;
-                    populateStandardData(keys, firstCell, Math.min(firstCell + numCellsShowingPlusBuffer + 1, keys.length), $scope.data);
+                    var numCellsShowingPlusBuffer = numCellsShowing + $scope.buffer;
+                    var lastVisible = Math.min(firstCell + numCellsShowingPlusBuffer + 1, keys.length);
+                    populateData($scope.data, keys, firstCell, lastVisible, $scope.cellHeight, $scope.buffer);
                 }
-                function populateStandardData(keys, first, last, data) {
+                function populateData(data, keys, firstVisible, lastVisible, cellHeight, buffer) {
                     var i, length, html = '';
-                    for (i = first; i < last; i++) {
-                        html += '<div class="virtual-scroll-col-box" style="top:' + i * $scope.cellHeight + 'px">' + data[keys[i]].name + '</div>';
+                    for (i = firstVisible; i < lastVisible; i++) {
+                        html += '<div class="virtual-scroll-col-box" style="top:' + i * cellHeight + 'px">' + data[keys[i]].name + '</div>';
                     }
                     $canvas.html(html);
-                    for (i = first - 1; i >= Math.max(first - $scope.cellBuffer, 0); i--) {
-                        $canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * $scope.cellHeight + 'px">' + $scope.data[keys[i]].name + '</div>');
+                    // Need to prepend these after the visible cells have been added to the DOM otherwise the buffer cells will be showing.
+                    // Also add cells one by one above the visible cells so that the closest cells will be visible first when the user scrolls upward.
+                    for (i = firstVisible - 1; i >= Math.max(firstVisible - buffer, 0); i--) {
+                        $canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * cellHeight + 'px">' + data[keys[i]].name + '</div>');
                     }
                 }
                 function validateScope() {
@@ -50,7 +53,7 @@ var app;
                     if ($scope.cellHeight === undefined || $scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');
                     }
-                    if ($scope.cellBuffer === undefined || $scope.cellBuffer <= 0) {
+                    if ($scope.buffer === undefined || $scope.buffer <= 0) {
                         throw new Error('cellBuffer is invalid.');
                     }
                     if ($scope.delayInMilliSeconds === undefined || $scope.delayInMilliSeconds <= 0) {

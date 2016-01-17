@@ -10,20 +10,26 @@ var app;
                 buffer: '=',
                 delayInMilliseconds: '=',
                 orderedDataIds: '=',
-                top: '='
+                top: '=',
+                bottom: '=',
+                left: '='
             };
             this.restrict = 'E';
             VirtualScrollColumn.prototype.link = function (scope, element, attributes) {
                 var DEFAULT_BUFFER = 3;
                 var DEFAULT_DELAY_IN_MILLISECONDS = 80;
+                var DEFAULT_BOT = 0;
+                var DEFAULT_LEFT = 0;
                 scope.buffer = scope.buffer || DEFAULT_BUFFER;
                 scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
+                scope.bottom = scope.bottom || DEFAULT_BOT;
+                scope.left = scope.left || DEFAULT_LEFT;
                 validateScope();
                 scope.columnStyle = {
                     'position': 'absolute',
                     'top': scope.top,
-                    'bottom': 0,
-                    'left': 0,
+                    'bottom': scope.bottom,
+                    'left': scope.left,
                     'width': '200px',
                     'overflow-x': 'hidden',
                     'overflow-y': 'auto',
@@ -74,14 +80,20 @@ var app;
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');
                     }
-                    if (scope.buffer === undefined || scope.buffer <= 0) {
+                    if (scope.buffer === undefined || scope.buffer < 0) {
                         throw new Error('cellBuffer is invalid.');
                     }
                     if (scope.delayInMilliSeconds === undefined || scope.delayInMilliSeconds <= 0) {
                         throw new Error('delayInMilliSeconds is invalid.');
                     }
-                    if (scope.top === undefined || scope.top <= 0) {
+                    if (scope.top === undefined || scope.top < 0) {
                         throw new Error('top is invalid.');
+                    }
+                    if (scope.left === undefined || scope.left < 0) {
+                        throw new Error('left is invalid.');
+                    }
+                    if (scope.bottom === undefined || scope.bottom < 0) {
+                        throw new Error('bottom is invalid.');
                     }
                 }
                 /**

@@ -3,6 +3,11 @@ module app.common {
         [id: number]: IStandard
     }
 
+    export interface IStandard {
+        id: number,
+        name: string
+    }
+
     interface IStandardService {
         getStandardsById(): IStandardsById;
         getStandardIds(): number[];

@@ -8,7 +8,7 @@
     class VirtualScrollColumnCtrl implements IVirtualScrollColumnModel {
         standardsById: common.IStandardsById;
         standardIds: number[];
-        standards: IStandard[];
+        standards: common.IStandard[];
         cellHeight: number;
 
         static $inject = ['$scope', 'standardService'];

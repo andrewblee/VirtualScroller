@@ -27,8 +27,8 @@ var app;
                 });
                 function populateData() {
                     var firstVisible = Math.floor($column.scrollTop() / scope.cellHeight);
-                    var canvasHeight = $canvas.height();
-                    var visibleCellCount = Math.round(canvasHeight / scope.cellHeight) + 1;
+                    var visibleColHeight = $column.height();
+                    var visibleCellCount = Math.round(visibleColHeight / scope.cellHeight) + 1;
                     var lastVisible = firstVisible + visibleCellCount;
                     populateVisibleData(firstVisible, lastVisible);
                 }

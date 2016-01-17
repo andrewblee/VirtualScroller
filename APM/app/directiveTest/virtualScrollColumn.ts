@@ -1,9 +1,6 @@
 ﻿module app {
     'use strict';
-    export interface IStandard {
-        id: number,
-        name: string
-    }
+
 
     export interface IDictionary<T> {
         [key: string]: T;
@@ -51,8 +48,8 @@
 
                 function populateData() {
                     let firstVisible = Math.floor($column.scrollTop() / scope.cellHeight);
-                    let canvasHeight = $canvas.height();
-                    let visibleCellCount = Math.round(canvasHeight / scope.cellHeight) + 1;
+                    let visibleColHeight = $column.height();
+                    let visibleCellCount = Math.round(visibleColHeight / scope.cellHeight) + 1;
                     let lastVisible = firstVisible + visibleCellCount;
                     populateVisibleData(firstVisible, lastVisible);
                 }

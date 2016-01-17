@@ -8,6 +8,10 @@ var app;
             this.cellHeight = 100;
             getStandardsById();
             getStandardIds();
+            getStandards();
+            function getStandards() {
+                that.standards = standardService.getStandards();
+            }
             function getStandardIds() {
                 that.standardIds = standardService.getStandardIds();
             }

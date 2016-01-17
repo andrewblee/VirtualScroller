@@ -11,6 +11,7 @@
 
     export interface IVirtualScrollColumnScope extends ng.IScope {
         data: IDictionary<any>;
+        orderedDataIds: number[];
         cellHeight: number;
         buffer: number;
         delayInMilliSeconds: number;
@@ -23,7 +24,8 @@
             data: '=',
             cellHeight: '=',
             buffer: '=',
-            delayInMilliseconds: '='
+            delayInMilliseconds: '=',
+            orderedDataIds: '='
         };
         public restrict = 'E';
 
@@ -37,7 +39,6 @@
 
                 validateScope();
 
-                let keys = Object.keys(scope.data);
                 let $column = element.find('.virtual-scroll-col');
                 let $canvas = element.find('.canvas');
 
@@ -66,8 +67,8 @@
                 function populateData(firstVisible: number, lastVisible: number) {
                     let i, length, html = '';
 
-                    for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, keys.length); i++) {
-                        html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[keys[i]].name + '</div>';
+                    for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.orderedDataIds.length); i++) {
+                        html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>';
                     }
 
                     $canvas.html(html);
@@ -75,7 +76,7 @@
                     // Need to prepend these after the visible cells have been added to the DOM otherwise the buffer cells will be showing.
                     // Also add cells one by one above the visible cells so that the closest cells will be visible first when the user scrolls upward.
                     for (i = firstVisible - 1; i >= Math.max(firstVisible - scope.buffer, 0); i--) {
-                        $canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[keys[i]].name + '</div>');
+                        $canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>');
                     }
                 }
 
@@ -101,7 +102,7 @@
                  * Set the overall canvas height.
                  */
                 function setCanvasHeight() {
-                    $canvas.height(keys.length * scope.cellHeight);
+                    $canvas.height(scope.orderedDataIds.length * scope.cellHeight);
                 }
             };
         }

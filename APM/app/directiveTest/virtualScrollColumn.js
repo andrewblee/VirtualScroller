@@ -27,11 +27,9 @@ var app;
                 });
                 function populateStandardCol(scrollAmount, cellHeight) {
                     var firstVisible = Math.floor(scrollAmount / cellHeight);
-                    var headerColHeight = $column.height();
-                    var numCellsShowing = Math.round(headerColHeight / cellHeight);
-                    //let numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
-                    var lastVisible = firstVisible + numCellsShowing + 1;
-                    //let lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
+                    var canvasHeight = $canvas.height();
+                    var visibleCellCount = Math.round(canvasHeight / cellHeight) + 1;
+                    var lastVisible = firstVisible + visibleCellCount;
                     populateData(firstVisible, lastVisible);
                 }
                 /**

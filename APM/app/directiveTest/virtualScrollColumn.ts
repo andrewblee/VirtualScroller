@@ -51,11 +51,9 @@
 
                 function populateStandardCol(scrollAmount: number, cellHeight: number) {
                     let firstVisible = Math.floor(scrollAmount / cellHeight);
-                    let headerColHeight = $column.height();
-                    let numCellsShowing = Math.round(headerColHeight / cellHeight);
-                    //let numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
-                    let lastVisible = firstVisible + numCellsShowing + 1;
-                    //let lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
+                    let canvasHeight = $canvas.height();
+                    let visibleCellCount = Math.round(canvasHeight / cellHeight) + 1;
+                    let lastVisible = firstVisible + visibleCellCount;
                     populateData(firstVisible, lastVisible);
                 }
 

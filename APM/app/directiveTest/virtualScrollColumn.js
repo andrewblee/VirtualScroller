@@ -21,23 +21,23 @@ var app;
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
                 setCanvasHeight();
-                populateStandardCol($column.scrollTop(), scope.cellHeight);
+                populateData();
                 $column.scrolled(scope.delayInMilliSeconds, function () {
-                    populateStandardCol($column.scrollTop(), scope.cellHeight);
+                    populateData();
                 });
-                function populateStandardCol(scrollAmount, cellHeight) {
-                    var firstVisible = Math.floor(scrollAmount / cellHeight);
+                function populateData() {
+                    var firstVisible = Math.floor($column.scrollTop() / scope.cellHeight);
                     var canvasHeight = $canvas.height();
-                    var visibleCellCount = Math.round(canvasHeight / cellHeight) + 1;
+                    var visibleCellCount = Math.round(canvasHeight / scope.cellHeight) + 1;
                     var lastVisible = firstVisible + visibleCellCount;
-                    populateData(firstVisible, lastVisible);
+                    populateVisibleData(firstVisible, lastVisible);
                 }
                 /**
                  * Function populates canvas with data.
                  * @param firstVisible Index of the first visible cell.
                  * @param lastVisible Index of the last visible cell.
                  */
-                function populateData(firstVisible, lastVisible) {
+                function populateVisibleData(firstVisible, lastVisible) {
                     var i, length, html = '';
                     // Add buffer to last visible cell as long as it doesn't exceed data length.
                     for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.orderedDataIds.length); i++) {
@@ -53,6 +53,12 @@ var app;
                 function validateScope() {
                     if (!scope.data) {
                         throw new Error('data must be defined');
+                    }
+                    if (!scope.orderedDataIds) {
+                        throw new Error('orderedDataIds must be defined');
+                    }
+                    if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
+                        throw new Error('data and orderedDataIds must have the same length');
                     }
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');

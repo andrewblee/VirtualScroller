@@ -43,18 +43,18 @@
                 let $canvas = element.find('.canvas');
 
                 setCanvasHeight();
-                populateStandardCol($column.scrollTop(), scope.cellHeight);
+                populateData();
 
                 (<any>$column).scrolled(scope.delayInMilliSeconds, function () {
-                    populateStandardCol($column.scrollTop(), scope.cellHeight);
+                    populateData();
                 });
 
-                function populateStandardCol(scrollAmount: number, cellHeight: number) {
-                    let firstVisible = Math.floor(scrollAmount / cellHeight);
+                function populateData() {
+                    let firstVisible = Math.floor($column.scrollTop() / scope.cellHeight);
                     let canvasHeight = $canvas.height();
-                    let visibleCellCount = Math.round(canvasHeight / cellHeight) + 1;
+                    let visibleCellCount = Math.round(canvasHeight / scope.cellHeight) + 1;
                     let lastVisible = firstVisible + visibleCellCount;
-                    populateData(firstVisible, lastVisible);
+                    populateVisibleData(firstVisible, lastVisible);
                 }
 
                 /**
@@ -62,7 +62,7 @@
                  * @param firstVisible Index of the first visible cell.
                  * @param lastVisible Index of the last visible cell.
                  */
-                function populateData(firstVisible: number, lastVisible: number) {
+                function populateVisibleData(firstVisible: number, lastVisible: number) {
                     let i, length, html = '';
 
                     // Add buffer to last visible cell as long as it doesn't exceed data length.
@@ -82,6 +82,14 @@
                 function validateScope() {
                     if (!scope.data) {
                         throw new Error('data must be defined');
+                    }
+
+                    if (!scope.orderedDataIds) {
+                        throw new Error('orderedDataIds must be defined');
+                    }
+
+                    if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
+                        throw new Error('data and orderedDataIds must have the same length');
                     }
 
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {

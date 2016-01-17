@@ -12,6 +12,8 @@
         cellHeight: number;
         buffer: number;
         delayInMilliSeconds: number;
+        columnStyle: {};
+        top: number;
     }
 
     class VirtualScrollColumn {
@@ -22,7 +24,8 @@
             cellHeight: '=',
             buffer: '=',
             delayInMilliseconds: '=',
-            orderedDataIds: '='
+            orderedDataIds: '=',
+            top: '='
         };
         public restrict = 'E';
 
@@ -35,6 +38,17 @@
                 scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
 
                 validateScope();
+
+                scope.columnStyle = {
+                    'position': 'absolute',
+                    'top': scope.top,
+                    'bottom': 0,
+                    'left': 0,
+                    'width': '200px',
+                    'overflow-x': 'hidden',
+                    'overflow-y': 'auto',
+                    'background': 'red'
+                };
 
                 let $column = element.find('.virtual-scroll-col');
                 let $canvas = element.find('.canvas');
@@ -78,15 +92,15 @@
 
                 function validateScope() {
                     if (!scope.data) {
-                        throw new Error('data must be defined');
+                        throw new Error('data must be defined.');
                     }
 
                     if (!scope.orderedDataIds) {
-                        throw new Error('orderedDataIds must be defined');
+                        throw new Error('orderedDataIds must be defined.');
                     }
 
                     if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
-                        throw new Error('data and orderedDataIds must have the same length');
+                        throw new Error('data and orderedDataIds must have the same length.');
                     }
 
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
@@ -99,6 +113,10 @@
 
                     if (scope.delayInMilliSeconds === undefined || scope.delayInMilliSeconds <= 0) {
                         throw new Error('delayInMilliSeconds is invalid.');
+                    }
+
+                    if (scope.top === undefined || scope.top <= 0) {
+                        throw new Error('top is invalid.');
                     }
                 }
 

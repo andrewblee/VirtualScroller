@@ -9,7 +9,8 @@ var app;
                 cellHeight: '=',
                 buffer: '=',
                 delayInMilliseconds: '=',
-                orderedDataIds: '='
+                orderedDataIds: '=',
+                top: '='
             };
             this.restrict = 'E';
             VirtualScrollColumn.prototype.link = function (scope, element, attributes) {
@@ -18,6 +19,16 @@ var app;
                 scope.buffer = scope.buffer || DEFAULT_BUFFER;
                 scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
                 validateScope();
+                scope.columnStyle = {
+                    'position': 'absolute',
+                    'top': scope.top,
+                    'bottom': 0,
+                    'left': 0,
+                    'width': '200px',
+                    'overflow-x': 'hidden',
+                    'overflow-y': 'auto',
+                    'background': 'red'
+                };
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
                 setCanvasHeight();
@@ -52,13 +63,13 @@ var app;
                 }
                 function validateScope() {
                     if (!scope.data) {
-                        throw new Error('data must be defined');
+                        throw new Error('data must be defined.');
                     }
                     if (!scope.orderedDataIds) {
-                        throw new Error('orderedDataIds must be defined');
+                        throw new Error('orderedDataIds must be defined.');
                     }
                     if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
-                        throw new Error('data and orderedDataIds must have the same length');
+                        throw new Error('data and orderedDataIds must have the same length.');
                     }
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');
@@ -68,6 +79,9 @@ var app;
                     }
                     if (scope.delayInMilliSeconds === undefined || scope.delayInMilliSeconds <= 0) {
                         throw new Error('delayInMilliSeconds is invalid.');
+                    }
+                    if (scope.top === undefined || scope.top <= 0) {
+                        throw new Error('top is invalid.');
                     }
                 }
                 /**

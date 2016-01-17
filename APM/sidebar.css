@@ -49,7 +49,7 @@
     position: absolute;
 }
 
-.virtual-scroll-col {
+/*.virtual-scroll-col {
     position: absolute;
     top: 100px;
     bottom: 0;
@@ -57,7 +57,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     background: red;
-}
+}*/
 
 .virtual-scroll-col .canvas {
     position: relative;

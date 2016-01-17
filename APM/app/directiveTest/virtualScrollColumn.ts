@@ -12,11 +12,11 @@
         cellHeight: number;
         buffer: number;
         delayInMilliSeconds: number;
-        columnStyle: {};
+        colStyle: {};
         top: number;
         bottom: number;
         left: number;
-        cellWidth: number;
+        colWidth: number;
     }
 
     class VirtualScrollColumn {
@@ -31,30 +31,21 @@
             top: '=',
             bottom: '=',
             left: '=',
-            cellWidth: '='
+            colWidth: '='
         };
         public restrict = 'E';
 
         constructor() {
             VirtualScrollColumn.prototype.link = (scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {
-                let DEFAULT_BUFFER = 3;
-                let DEFAULT_DELAY_IN_MILLISECONDS = 80;
-                let DEFAULT_BOT = 0;
-                let DEFAULT_LEFT = 0;
-
-                scope.buffer = scope.buffer || DEFAULT_BUFFER;
-                scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
-                scope.bottom = scope.bottom || DEFAULT_BOT;
-                scope.left = scope.left || DEFAULT_LEFT;
-
+                setDefaultValues();
                 validateScope();
 
-                scope.columnStyle = {
+                scope.colStyle = {
                     'position': 'absolute',
                     'top': scope.top,
                     'bottom': scope.bottom,
                     'left': scope.left,
-                    'width': scope.cellWidth,
+                    'width': scope.colWidth,
                     'overflow-x': 'hidden',
                     'overflow-y': 'auto'
                 };
@@ -99,6 +90,18 @@
                     }
                 }
 
+                function setDefaultValues() {
+                    let DEFAULT_BUFFER = 3;
+                    let DEFAULT_DELAY_IN_MILLISECONDS = 80;
+                    let DEFAULT_BOT = 0;
+                    let DEFAULT_LEFT = 0;
+
+                    scope.buffer = scope.buffer || DEFAULT_BUFFER;
+                    scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
+                    scope.bottom = scope.bottom || DEFAULT_BOT;
+                    scope.left = scope.left || DEFAULT_LEFT;
+                }
+
                 function validateScope() {
                     if (!scope.data) {
                         throw new Error('data must be defined.');
@@ -136,7 +139,7 @@
                         throw new Error('bottom is invalid.');
                     }
 
-                    if (scope.cellWidth === undefined || scope.cellWidth <= 0) {
+                    if (scope.colWidth === undefined || scope.colWidth <= 0) {
                         throw new Error('cellWidth is invalid.');
                     }
                 }

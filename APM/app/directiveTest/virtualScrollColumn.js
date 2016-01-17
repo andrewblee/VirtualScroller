@@ -13,25 +13,18 @@ var app;
                 top: '=',
                 bottom: '=',
                 left: '=',
-                cellWidth: '='
+                colWidth: '='
             };
             this.restrict = 'E';
             VirtualScrollColumn.prototype.link = function (scope, element, attributes) {
-                var DEFAULT_BUFFER = 3;
-                var DEFAULT_DELAY_IN_MILLISECONDS = 80;
-                var DEFAULT_BOT = 0;
-                var DEFAULT_LEFT = 0;
-                scope.buffer = scope.buffer || DEFAULT_BUFFER;
-                scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
-                scope.bottom = scope.bottom || DEFAULT_BOT;
-                scope.left = scope.left || DEFAULT_LEFT;
+                setDefaultValues();
                 validateScope();
-                scope.columnStyle = {
+                scope.colStyle = {
                     'position': 'absolute',
                     'top': scope.top,
                     'bottom': scope.bottom,
                     'left': scope.left,
-                    'width': scope.cellWidth,
+                    'width': scope.colWidth,
                     'overflow-x': 'hidden',
                     'overflow-y': 'auto'
                 };
@@ -67,6 +60,16 @@ var app;
                         $canvas.prepend('<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>');
                     }
                 }
+                function setDefaultValues() {
+                    var DEFAULT_BUFFER = 3;
+                    var DEFAULT_DELAY_IN_MILLISECONDS = 80;
+                    var DEFAULT_BOT = 0;
+                    var DEFAULT_LEFT = 0;
+                    scope.buffer = scope.buffer || DEFAULT_BUFFER;
+                    scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
+                    scope.bottom = scope.bottom || DEFAULT_BOT;
+                    scope.left = scope.left || DEFAULT_LEFT;
+                }
                 function validateScope() {
                     if (!scope.data) {
                         throw new Error('data must be defined.');
@@ -95,7 +98,7 @@ var app;
                     if (scope.bottom === undefined || scope.bottom < 0) {
                         throw new Error('bottom is invalid.');
                     }
-                    if (scope.cellWidth === undefined || scope.cellWidth <= 0) {
+                    if (scope.colWidth === undefined || scope.colWidth <= 0) {
                         throw new Error('cellWidth is invalid.');
                     }
                 }

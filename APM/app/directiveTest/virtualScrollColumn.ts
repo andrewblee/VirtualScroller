@@ -16,6 +16,7 @@
         top: number;
         bottom: number;
         left: number;
+        cellWidth: number;
     }
 
     class VirtualScrollColumn {
@@ -29,7 +30,8 @@
             orderedDataIds: '=',
             top: '=',
             bottom: '=',
-            left: '='
+            left: '=',
+            cellWidth: '='
         };
         public restrict = 'E';
 
@@ -52,10 +54,9 @@
                     'top': scope.top,
                     'bottom': scope.bottom,
                     'left': scope.left,
-                    'width': '200px',
+                    'width': scope.cellWidth,
                     'overflow-x': 'hidden',
-                    'overflow-y': 'auto',
-                    'background': 'red'
+                    'overflow-y': 'auto'
                 };
 
                 let $column = element.find('.virtual-scroll-col');
@@ -86,7 +87,7 @@
 
                     // Add buffer to last visible cell as long as it doesn't exceed data length.
                     for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.orderedDataIds.length); i++) {
-                        html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>';
+                        html += '<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>';
                     }
 
                     $canvas.html(html);
@@ -94,7 +95,7 @@
                     // Need to prepend these after the visible cells have been added to the DOM otherwise the buffer cells will be showing.
                     // Also add cells one by one above the visible cells so that the closest cells will be visible first when the user scrolls upward.
                     for (i = firstVisible - 1; i >= Math.max(firstVisible - scope.buffer, 0); i--) {
-                        $canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>');
+                        $canvas.prepend('<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>');
                     }
                 }
 
@@ -133,6 +134,10 @@
 
                     if (scope.bottom === undefined || scope.bottom < 0) {
                         throw new Error('bottom is invalid.');
+                    }
+
+                    if (scope.cellWidth === undefined || scope.cellWidth <= 0) {
+                        throw new Error('cellWidth is invalid.');
                     }
                 }
 

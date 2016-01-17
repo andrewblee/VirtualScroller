@@ -29,8 +29,9 @@ var app;
                     var firstVisible = Math.floor(scrollAmount / cellHeight);
                     var headerColHeight = $column.height();
                     var numCellsShowing = Math.round(headerColHeight / cellHeight);
-                    var numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
-                    var lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
+                    //let numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
+                    var lastVisible = firstVisible + numCellsShowing + 1;
+                    //let lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
                     populateData(firstVisible, lastVisible);
                 }
                 /**
@@ -40,7 +41,7 @@ var app;
                  */
                 function populateData(firstVisible, lastVisible) {
                     var i, length, html = '';
-                    for (i = firstVisible; i < lastVisible; i++) {
+                    for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, keys.length); i++) {
                         html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[keys[i]].name + '</div>';
                     }
                     $canvas.html(html);

@@ -52,8 +52,9 @@
                     let firstVisible = Math.floor(scrollAmount / cellHeight);
                     let headerColHeight = $column.height();
                     let numCellsShowing = Math.round(headerColHeight / cellHeight);
-                    let numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
-                    let lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
+                    //let numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
+                    let lastVisible = firstVisible + numCellsShowing + 1;
+                    //let lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
                     populateData(firstVisible, lastVisible);
                 }
 
@@ -65,7 +66,7 @@
                 function populateData(firstVisible: number, lastVisible: number) {
                     let i, length, html = '';
 
-                    for (i = firstVisible; i < lastVisible; i++) {
+                    for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, keys.length); i++) {
                         html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[keys[i]].name + '</div>';
                     }
 

@@ -41,6 +41,7 @@ var app;
                  */
                 function populateData(firstVisible, lastVisible) {
                     var i, length, html = '';
+                    // Add buffer to last visible cell as long as it doesn't exceed data length.
                     for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.orderedDataIds.length); i++) {
                         html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>';
                     }

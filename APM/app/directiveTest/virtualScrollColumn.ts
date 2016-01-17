@@ -38,48 +38,43 @@
                 validateScope();
 
                 let keys = Object.keys(scope.data);
-                let column = element.find('.virtual-scroll-col');
-                let canvas = element.find('.canvas');
+                let $column = element.find('.virtual-scroll-col');
+                let $canvas = element.find('.canvas');
 
-                setCanvasHeight(canvas, keys.length, scope.cellHeight);
-                populateStandardCol(column.scrollTop(), scope.cellHeight);
+                setCanvasHeight();
+                populateStandardCol($column.scrollTop(), scope.cellHeight);
 
-                (<any>column).scrolled(scope.delayInMilliSeconds, function () {
-                    populateStandardCol(column.scrollTop(), scope.cellHeight);
+                (<any>$column).scrolled(scope.delayInMilliSeconds, function () {
+                    populateStandardCol($column.scrollTop(), scope.cellHeight);
                 });
 
                 function populateStandardCol(scrollAmount: number, cellHeight: number) {
                     let firstVisible = Math.floor(scrollAmount / cellHeight);
-                    let headerColHeight = column.height();
+                    let headerColHeight = $column.height();
                     let numCellsShowing = Math.round(headerColHeight / cellHeight);
                     let numCellsShowingPlusBuffer = numCellsShowing + scope.buffer;
                     let lastVisible = Math.min(firstVisible + numCellsShowingPlusBuffer + 1, keys.length);
-                    populateData(canvas, scope.data, keys, firstVisible, lastVisible, cellHeight, scope.buffer);
+                    populateData(firstVisible, lastVisible);
                 }
 
                 /**
-                 * Function populates the data into the DOM.
-                 * @param canvas JQuery reference to the canvas.
-                 * @param data Dictionary containing data.
-                 * @param keys Dictionary keys.
+                 * Function populates canvas with data.
                  * @param firstVisible Index of the first visible cell.
                  * @param lastVisible Index of the last visible cell.
-                 * @param cellHeight Height in pixels of a single column cell.
-                 * @param buffer Number of cells to insert above and below the visible cells to improve user scrolling experience.
                  */
-                function populateData(canvas: JQuery, data: IDictionary<any>, keys: string[], firstVisible: number, lastVisible: number, cellHeight: number, buffer: number) {
+                function populateData(firstVisible: number, lastVisible: number) {
                     let i, length, html = '';
 
                     for (i = firstVisible; i < lastVisible; i++) {
-                        html += '<div class="virtual-scroll-col-box" style="top:' + i * cellHeight + 'px">' + data[keys[i]].name + '</div>';
+                        html += '<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[keys[i]].name + '</div>';
                     }
 
-                    canvas.html(html);
+                    $canvas.html(html);
 
                     // Need to prepend these after the visible cells have been added to the DOM otherwise the buffer cells will be showing.
                     // Also add cells one by one above the visible cells so that the closest cells will be visible first when the user scrolls upward.
-                    for (i = firstVisible - 1; i >= Math.max(firstVisible - buffer, 0); i--) {
-                        canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * cellHeight + 'px">' + data[keys[i]].name + '</div>');
+                    for (i = firstVisible - 1; i >= Math.max(firstVisible - scope.buffer, 0); i--) {
+                        $canvas.prepend('<div class="virtual-scroll-col-box" style="top:' + i * scope.cellHeight + 'px">' + scope.data[keys[i]].name + '</div>');
                     }
                 }
 
@@ -103,12 +98,9 @@
 
                 /**
                  * Set the overall canvas height.
-                 * @param canvas JQuery reference to the canvas.
-                 * @param dataLength Total number of data elements.
-                 * @param cellHeight Height in pixels of a single column cell.
                  */
-                function setCanvasHeight(canvas: JQuery, dataLength: number, cellHeight: number) {
-                    canvas.height(dataLength * cellHeight);
+                function setCanvasHeight() {
+                    $canvas.height(keys.length * scope.cellHeight);
                 }
             };
         }

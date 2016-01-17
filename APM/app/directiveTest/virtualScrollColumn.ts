@@ -13,6 +13,7 @@
         buffer: number;
         delayInMilliSeconds: number;
         colStyle: {};
+        canvasStyle: {};
         top: number;
         bottom: number;
         left: number;
@@ -49,6 +50,10 @@
                     'overflow-x': 'hidden',
                     'overflow-y': 'auto'
                 };
+
+                scope.canvasStyle = {
+                    'position': 'relative'
+                }
 
                 let $column = element.find('.virtual-scroll-col');
                 let $canvas = element.find('.canvas');

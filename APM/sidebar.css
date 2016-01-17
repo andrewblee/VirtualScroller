@@ -59,9 +59,9 @@
     background: red;
 }
 
-.virtual-scroll-col .canvas {
+/*.virtual-scroll-col .canvas {
     position: relative;
-}
+}*/
 
 .virtual-scroll-col .cell {
     height: 100px;

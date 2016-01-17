@@ -28,6 +28,9 @@ var app;
                     'overflow-x': 'hidden',
                     'overflow-y': 'auto'
                 };
+                scope.canvasStyle = {
+                    'position': 'relative'
+                };
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
                 setCanvasHeight();

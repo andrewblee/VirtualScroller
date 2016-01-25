@@ -61,6 +61,12 @@
                 setCanvasHeight();
                 populateData();
 
+                scope.$watchCollection('orderedDataIds', (newCollection, oldCollection, scope) => {
+                    console.log('WATCH COLLECTION');
+                    setCanvasHeight();
+                    populateData();
+                });
+
                 (<any>$column).scrolled(scope.delayInMilliSeconds, function () {
                     populateData();
                 });
@@ -116,9 +122,9 @@
                         throw new Error('orderedDataIds must be defined.');
                     }
 
-                    if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
-                        throw new Error('data and orderedDataIds must have the same length.');
-                    }
+                    //if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
+                    //    throw new Error('data and orderedDataIds must have the same length.');
+                    //}
 
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');

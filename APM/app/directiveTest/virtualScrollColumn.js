@@ -35,6 +35,11 @@ var app;
                 var $canvas = element.find('.canvas');
                 setCanvasHeight();
                 populateData();
+                scope.$watchCollection('orderedDataIds', function (newCollection, oldCollection, scope) {
+                    console.log('WATCH COLLECTION');
+                    setCanvasHeight();
+                    populateData();
+                });
                 $column.scrolled(scope.delayInMilliSeconds, function () {
                     populateData();
                 });
@@ -80,9 +85,9 @@ var app;
                     if (!scope.orderedDataIds) {
                         throw new Error('orderedDataIds must be defined.');
                     }
-                    if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
-                        throw new Error('data and orderedDataIds must have the same length.');
-                    }
+                    //if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
+                    //    throw new Error('data and orderedDataIds must have the same length.');
+                    //}
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');
                     }

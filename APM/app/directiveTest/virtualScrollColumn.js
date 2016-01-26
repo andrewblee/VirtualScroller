@@ -19,30 +19,33 @@ var app;
             VirtualScrollColumn.prototype.link = function (scope, element, attributes) {
                 setDefaultValues();
                 validateScope();
-                scope.colStyle = {
-                    'position': 'absolute',
-                    'top': scope.top,
-                    'bottom': scope.bottom,
-                    'left': scope.left,
-                    'width': scope.colWidth,
-                    'overflow-x': 'hidden',
-                    'overflow-y': 'auto'
-                };
-                scope.canvasStyle = {
-                    'position': 'relative'
-                };
+                configureStyle();
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
-                setCanvasHeight();
-                populateData();
+                /**
+                 * Update height and virtual scroll data only when controller changes data IDs.
+                 */
                 scope.$watchCollection('orderedDataIds', function (newCollection, oldCollection, scope) {
-                    console.log('WATCH COLLECTION');
                     setCanvasHeight();
                     populateData();
                 });
                 $column.scrolled(scope.delayInMilliSeconds, function () {
                     populateData();
                 });
+                function configureStyle() {
+                    scope.colStyle = {
+                        'position': 'absolute',
+                        'top': scope.top,
+                        'bottom': scope.bottom,
+                        'left': scope.left,
+                        'width': scope.colWidth,
+                        'overflow-x': 'hidden',
+                        'overflow-y': 'auto'
+                    };
+                    scope.canvasStyle = {
+                        'position': 'relative'
+                    };
+                }
                 function populateData() {
                     var firstVisible = Math.floor($column.scrollTop() / scope.cellHeight);
                     var visibleColHeight = $column.height();

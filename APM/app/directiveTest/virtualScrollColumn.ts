@@ -57,7 +57,7 @@
                     populateData();
                 });
 
-                function configureStyle() {
+                function configureStyle() : void {
                     scope.colStyle = {
                         'position': 'absolute',
                         'top': scope.top,
@@ -73,7 +73,7 @@
                     }
                 }
 
-                function populateData() {
+                function populateData() : void {
                     let firstVisible = Math.floor($column.scrollTop() / scope.cellHeight);
                     let visibleColHeight = $column.height();
                     let visibleCellCount = Math.round(visibleColHeight / scope.cellHeight) + 1;
@@ -86,7 +86,7 @@
                  * @param firstVisible Index of the first visible cell.
                  * @param lastVisible Index of the last visible cell.
                  */
-                function populateDataPlusBuffer(firstVisible: number, lastVisible: number) {
+                function populateDataPlusBuffer(firstVisible: number, lastVisible: number) : void {
                     let i, length, html = '';
 
                     // Add buffer to last visible cell as long as it doesn't exceed data length.
@@ -103,7 +103,7 @@
                     }
                 }
 
-                function setDefaultValues() {
+                function setDefaultValues() : void {
                     let DEFAULT_BUFFER = 3;
                     let DEFAULT_DELAY_IN_MILLISECONDS = 80;
                     let DEFAULT_BOT = 0;
@@ -115,7 +115,7 @@
                     scope.left = scope.left || DEFAULT_LEFT;
                 }
 
-                function validateScope() {
+                function validateScope() : void {
                     if (!scope.data) {
                         throw new Error('data must be defined.');
                     }
@@ -123,10 +123,6 @@
                     if (!scope.orderedDataIds) {
                         throw new Error('orderedDataIds must be defined.');
                     }
-
-                    //if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
-                    //    throw new Error('data and orderedDataIds must have the same length.');
-                    //}
 
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');
@@ -160,7 +156,7 @@
                 /**
                  * Set the overall canvas height.
                  */
-                function setCanvasHeight() {
+                function setCanvasHeight() : void {
                     $canvas.height(scope.orderedDataIds.length * scope.cellHeight);
                 }
             };

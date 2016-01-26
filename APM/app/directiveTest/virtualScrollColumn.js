@@ -88,9 +88,6 @@ var app;
                     if (!scope.orderedDataIds) {
                         throw new Error('orderedDataIds must be defined.');
                     }
-                    //if (scope.orderedDataIds.length !== Object.keys(scope.data).length) {
-                    //    throw new Error('data and orderedDataIds must have the same length.');
-                    //}
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
                         throw new Error('cellHeight is invalid.');
                     }

@@ -17,11 +17,11 @@ var app;
             };
             this.restrict = 'E';
             VirtualScrollColumn.prototype.link = function (scope, element, attributes) {
+                var $column = element.find('.virtual-scroll-col');
+                var $canvas = element.find('.canvas');
                 setDefaultValues();
                 validateScope();
                 configureStyle();
-                var $column = element.find('.virtual-scroll-col');
-                var $canvas = element.find('.canvas');
                 /**
                  * Update height and virtual scroll data only when controller changes data IDs.
                  */

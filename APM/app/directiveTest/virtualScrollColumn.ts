@@ -38,12 +38,12 @@
 
         constructor() {
             VirtualScrollColumn.prototype.link = (scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {
+                let $column = element.find('.virtual-scroll-col');
+                let $canvas = element.find('.canvas');
+
                 setDefaultValues();
                 validateScope();
                 configureStyle();
-
-                let $column = element.find('.virtual-scroll-col');
-                let $canvas = element.find('.canvas');
 
                 /**
                  * Update height and virtual scroll data only when controller changes data IDs.

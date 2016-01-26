@@ -51,14 +51,14 @@ var app;
                     var visibleColHeight = $column.height();
                     var visibleCellCount = Math.round(visibleColHeight / scope.cellHeight) + 1;
                     var lastVisible = firstVisible + visibleCellCount;
-                    populateVisibleData(firstVisible, lastVisible);
+                    populateDataPlusBuffer(firstVisible, lastVisible);
                 }
                 /**
-                 * Function populates canvas with data.
+                 * Function populates canvas with visible data plus buffer cells for smooth scrolling.
                  * @param firstVisible Index of the first visible cell.
                  * @param lastVisible Index of the last visible cell.
                  */
-                function populateVisibleData(firstVisible, lastVisible) {
+                function populateDataPlusBuffer(firstVisible, lastVisible) {
                     var i, length, html = '';
                     // Add buffer to last visible cell as long as it doesn't exceed data length.
                     for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.orderedDataIds.length); i++) {

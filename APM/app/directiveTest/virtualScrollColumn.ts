@@ -78,15 +78,15 @@
                     let visibleColHeight = $column.height();
                     let visibleCellCount = Math.round(visibleColHeight / scope.cellHeight) + 1;
                     let lastVisible = firstVisible + visibleCellCount;
-                    populateVisibleData(firstVisible, lastVisible);
+                    populateDataPlusBuffer(firstVisible, lastVisible);
                 }
 
                 /**
-                 * Function populates canvas with data.
+                 * Function populates canvas with visible data plus buffer cells for smooth scrolling.
                  * @param firstVisible Index of the first visible cell.
                  * @param lastVisible Index of the last visible cell.
                  */
-                function populateVisibleData(firstVisible: number, lastVisible: number) {
+                function populateDataPlusBuffer(firstVisible: number, lastVisible: number) {
                     let i, length, html = '';
 
                     // Add buffer to last visible cell as long as it doesn't exceed data length.

@@ -1,7 +1,6 @@
 ﻿module app {
     'use strict';
 
-
     export interface IDictionary<T> {
         [key: string]: T;
     }
@@ -35,6 +34,7 @@
             colWidth: '='
         };
         public restrict = 'E';
+        public transclude = true;
 
         constructor() {
             VirtualScrollColumn.prototype.link = (scope: IVirtualScrollColumnScope, element: JQuery, attributes) => {

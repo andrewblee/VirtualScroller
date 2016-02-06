@@ -16,6 +16,7 @@ var app;
                 colWidth: '='
             };
             this.restrict = 'E';
+            this.transclude = true;
             VirtualScrollColumn.prototype.link = function (scope, element, attributes) {
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');

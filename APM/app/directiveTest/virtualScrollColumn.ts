@@ -1,13 +1,8 @@
 ﻿module app {
     'use strict';
 
-    export interface IDictionary<T> {
-        [key: string]: T;
-    }
-
     export interface IVirtualScrollColumnScope extends ng.IScope {
-        data: IDictionary<any>;
-        orderedDataIds: number[];
+        data: Array<any>;
         cellHeight: number;
         buffer: number;
         delayInMilliSeconds: number;
@@ -27,7 +22,6 @@
             cellHeight: '=',
             buffer: '=',
             delayInMilliseconds: '=',
-            orderedDataIds: '=',
             top: '=',
             bottom: '=',
             left: '=',
@@ -48,7 +42,7 @@
                 /**
                  * Update height and virtual scroll data only when controller changes data IDs.
                  */
-                scope.$watchCollection('orderedDataIds', (newCollection, oldCollection, scope) => {
+                scope.$watchCollection('data', (newCollection, oldCollection, scope) => {
                     setCanvasHeight();
                     populateData();
                 });
@@ -90,8 +84,8 @@
                     let i, length, html = '';
 
                     // Add buffer to last visible cell as long as it doesn't exceed data length.
-                    for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.orderedDataIds.length); i++) {
-                        html += '<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>';
+                    for (i = firstVisible; i < Math.min(lastVisible + scope.buffer, scope.data.length); i++) {
+                        html += '<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[i].name + '</div>';
                     }
 
                     $canvas.html(html);
@@ -99,7 +93,7 @@
                     // Need to prepend these after the visible cells have been added to the DOM otherwise the buffer cells will be showing.
                     // Also add cells one by one above the visible cells so that the closest cells will be visible first when the user scrolls upward.
                     for (i = firstVisible - 1; i >= Math.max(firstVisible - scope.buffer, 0); i--) {
-                        $canvas.prepend('<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[scope.orderedDataIds[i]].name + '</div>');
+                        $canvas.prepend('<div class="cell" style="top:' + i * scope.cellHeight + 'px">' + scope.data[i].name + '</div>');
                     }
                 }
 
@@ -108,20 +102,18 @@
                     let DEFAULT_DELAY_IN_MILLISECONDS = 80;
                     let DEFAULT_BOT = 0;
                     let DEFAULT_LEFT = 0;
+                    let DEFAULT_TOP = 0;
 
                     scope.buffer = scope.buffer || DEFAULT_BUFFER;
                     scope.delayInMilliSeconds = scope.delayInMilliSeconds || DEFAULT_DELAY_IN_MILLISECONDS;
                     scope.bottom = scope.bottom || DEFAULT_BOT;
                     scope.left = scope.left || DEFAULT_LEFT;
+                    scope.top = scope.top || DEFAULT_TOP;
                 }
 
                 function validateScope() : void {
                     if (!scope.data) {
                         throw new Error('data must be defined.');
-                    }
-
-                    if (!scope.orderedDataIds) {
-                        throw new Error('orderedDataIds must be defined.');
                     }
 
                     if (scope.cellHeight === undefined || scope.cellHeight <= 0) {
@@ -157,7 +149,7 @@
                  * Set the overall canvas height.
                  */
                 function setCanvasHeight() : void {
-                    $canvas.height(scope.orderedDataIds.length * scope.cellHeight);
+                    $canvas.height(scope.data.length * scope.cellHeight);
                 }
             };
         }

@@ -7,7 +7,8 @@ var app;
             this.scope = {
                 uiDataProvider: '='
             };
-            this.restrict = 'AE';
+            this.restrict = 'E';
+            this.transclude = true;
             MyDirective.prototype.link = function ($scope, element, attributes) {
                 element.on('mouseenter', function () {
                     element.addClass('animate');

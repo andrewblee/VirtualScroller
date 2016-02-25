@@ -21,6 +21,11 @@ module app {
                 templateUrl: "/app/directiveTest/directiveTest.html",
                 controller: "VirtualScrollColumnCtrl as vm"
             })
+            .when("/virtualScroller",
+            {
+                templateUrl: "/app/virtualScroller/virtualScrollerTest.html",
+                controller: "VirtualScrollerCtrl as vm"
+            })
             .otherwise("/productList");
     }
 }

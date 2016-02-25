@@ -23,8 +23,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\changeName\template.html" />
+    <Content Include="app\transcludeTest\transcludeTest.html" />
     <Content Include="app\products\productDetailView.html" />
     <Content Include="app\products\productListView.html" />
+    <Content Include="app\virtualScroller\virtualScrollerTest.html" />
+    <Content Include="app\virtualScroller\virtualScroller.html" />
     <Content Include="data.js" />
     <Content Include="app\directiveTest\virtual-scroll-column.html" />
     <Content Include="app\directiveTest\directiveTest.html" />
@@ -57,11 +60,15 @@
     <TypeScriptCompile Include="app\common\services\standardService.ts" />
     <TypeScriptCompile Include="app\common\services\dataAccessService.ts" />
     <TypeScriptCompile Include="app\common\services\productResourceMock.ts" />
+    <TypeScriptCompile Include="app\transcludeTest\transcludeTest.ts" />
+    <TypeScriptCompile Include="app\transcludeTest\testCtrl.ts" />
     <TypeScriptCompile Include="app\products\product.ts" />
     <TypeScriptCompile Include="app\products\productDetailCtrl.ts" />
     <TypeScriptCompile Include="app\products\productListCtrl.ts" />
     <TypeScriptCompile Include="app\directiveTest\virtualScrollColumnCtrl.ts" />
     <TypeScriptCompile Include="app\directiveTest\virtualScrollColumn.ts" />
+    <TypeScriptCompile Include="app\virtualScroller\virtualScrollerCtrl.ts" />
+    <TypeScriptCompile Include="app\virtualScroller\virtualScroller.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-mocks.d.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-resource.d.ts" />
     <TypeScriptCompile Include="typings\angularjs\angular-route.d.ts" />

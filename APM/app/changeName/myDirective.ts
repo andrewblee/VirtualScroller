@@ -13,7 +13,8 @@
         public scope = {
             uiDataProvider: '='
         };
-        public restrict = 'AE';
+        public restrict = 'E';
+        public transclude = true;
 
         constructor() {
             MyDirective.prototype.link = ($scope: IAppCtrlScope, element: JQuery, attributes) => {

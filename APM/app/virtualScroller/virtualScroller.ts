@@ -1,18 +1,22 @@
 ﻿module app {
     'use strict';
 
+    export interface IVirtualScrollerScope extends ng.IScope {
+        greeting: string;
+    }
+
     class VirtualScroller {
-        public link: ($scope: ng.IScope, element: JQuery, attributes) => void;
+        public link: ($scope: IVirtualScrollerScope, element: JQuery, attributes) => void;
         public templateUrl = 'app/virtualScroller/virtualScroller.html';
         public scope = {
-            uiDataProvider: '='
+            greeting: '='
         };
         public restrict = 'E';
         public transclude = true;
 
         constructor() {
-            VirtualScroller.prototype.link = ($scope: ng.IScope, element: JQuery, attributes) => {
-
+            VirtualScroller.prototype.link = (scope: IVirtualScrollerScope, element: JQuery, attributes) => {
+                //scope.greeting = 'hi from directive';
             };
         }
 

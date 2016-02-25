@@ -5,11 +5,12 @@ var app;
         function VirtualScroller() {
             this.templateUrl = 'app/virtualScroller/virtualScroller.html';
             this.scope = {
-                uiDataProvider: '='
+                greeting: '='
             };
             this.restrict = 'E';
             this.transclude = true;
-            VirtualScroller.prototype.link = function ($scope, element, attributes) {
+            VirtualScroller.prototype.link = function (scope, element, attributes) {
+                //scope.greeting = 'hi from directive';
             };
         }
         VirtualScroller.Factory = function () {

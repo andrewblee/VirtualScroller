@@ -6,7 +6,7 @@
     }
 
     class VirtualScroller {
-        public link: ($scope: IVirtualScrollerScope, element: JQuery, attributes) => void;
+        public link: ($scope: IVirtualScrollerScope, element: JQuery, attributes, ctlr, transclude) => void;
         public templateUrl = 'app/virtualScroller/virtualScroller.html';
         public scope = {
             greeting: '='
@@ -15,8 +15,13 @@
         public transclude = true;
 
         constructor() {
-            VirtualScroller.prototype.link = (scope: IVirtualScrollerScope, element: JQuery, attributes) => {
-                //scope.greeting = 'hi from directive';
+            VirtualScroller.prototype.link = (scope: IVirtualScrollerScope, element: JQuery, attributes, ctlr, transclude) => {
+                scope.greeting = 'hi from directive';
+
+                console.log('hello');
+                transclude(scope, function (clone, scope) {
+                    element.append(clone);
+                });
             };
         }
 

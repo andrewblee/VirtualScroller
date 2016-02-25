@@ -9,8 +9,12 @@ var app;
             };
             this.restrict = 'E';
             this.transclude = true;
-            VirtualScroller.prototype.link = function (scope, element, attributes) {
-                //scope.greeting = 'hi from directive';
+            VirtualScroller.prototype.link = function (scope, element, attributes, ctlr, transclude) {
+                scope.greeting = 'hi from directive';
+                console.log('hello');
+                transclude(scope, function (clone, scope) {
+                    element.append(clone);
+                });
             };
         }
         VirtualScroller.Factory = function () {

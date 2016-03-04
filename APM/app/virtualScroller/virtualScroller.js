@@ -5,18 +5,12 @@ var app;
         function VirtualScroller() {
             this.templateUrl = 'app/virtualScroller/virtualScroller.html';
             this.scope = {
-                greeting: '=',
-                arr: '='
+                header: '=',
             };
             this.restrict = 'E';
             this.transclude = true;
-            VirtualScroller.prototype.link = function (scope, element, attributes, ctlr, transclude) {
-                scope.greeting = 'hi from directive';
-                scope.arr = [1, 2, 3];
-                console.log('hello');
-                transclude(scope, function (clone, scope) {
-                    element.append(clone);
-                });
+            VirtualScroller.prototype.link = function (scope, element, attributes) {
+                scope.header = 'hi from directive';
             };
         }
         VirtualScroller.Factory = function () {

@@ -1,31 +1,15 @@
 var app;
 (function (app) {
     var VirtualScrollerCtrl = (function () {
-        function VirtualScrollerCtrl($scope, standardService) {
+        function VirtualScrollerCtrl($scope) {
             this.$scope = $scope;
-            this.standardService = standardService;
-            var that = this;
-            this.cellHeight = 100;
-            that.test = test;
-            //that.greeting = 'hi from controller';
-            function test() {
-                that.standardIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
-            }
-            getStandardsById();
-            getStandardIds();
-            getStandards();
-            function getStandards() {
-                that.standards = standardService.getStandards();
-            }
-            function getStandardIds() {
-                that.standardIds = standardService.getStandardIds();
-            }
-            function getStandardsById() {
-                that.standardsById = standardService.getStandardsById();
-            }
+            $scope.person = {
+                name: 'John Doe',
+                profession: 'Fake name'
+            };
+            $scope.header = 'Person';
         }
-        //greeting: string;
-        VirtualScrollerCtrl.$inject = ['$scope', 'standardService'];
+        VirtualScrollerCtrl.$inject = ['$scope'];
         return VirtualScrollerCtrl;
     })();
     angular.module("productManagement").controller("VirtualScrollerCtrl", VirtualScrollerCtrl);

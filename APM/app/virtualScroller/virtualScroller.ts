@@ -2,29 +2,22 @@
     'use strict';
 
     export interface IVirtualScrollerScope extends ng.IScope {
-        greeting: string;
-        arr: Array<number>;
+        person: any;
+        header: string;
     }
 
     class VirtualScroller {
-        public link: ($scope: IVirtualScrollerScope, element: JQuery, attributes, ctlr, transclude) => void;
+        public link: ($scope: IVirtualScrollerScope, element: JQuery, attributes) => void;
         public templateUrl = 'app/virtualScroller/virtualScroller.html';
         public scope = {
-            greeting: '=',
-            arr: '='
+            header: '=',
         };
         public restrict = 'E';
         public transclude = true;
 
         constructor() {
-            VirtualScroller.prototype.link = (scope: IVirtualScrollerScope, element: JQuery, attributes, ctlr, transclude) => {
-                scope.greeting = 'hi from directive';
-                scope.arr = [1, 2, 3];
-
-                console.log('hello');
-                transclude(scope, function (clone, scope) {
-                    element.append(clone);
-                });
+            VirtualScroller.prototype.link = (scope: IVirtualScrollerScope, element: JQuery, attributes) => {
+                scope.header = 'hi from directive';
             };
         }
 

@@ -5,7 +5,6 @@ var app;
         function VirtualScroller() {
             this.templateUrl = 'app/virtualScroller/virtualScroller.html';
             this.scope = {
-                header: '=',
                 arr: '=',
                 cellHeight: '=',
                 buffer: '=',
@@ -20,11 +19,24 @@ var app;
             VirtualScroller.prototype.link = function ($scope, element, attributes) {
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
-                $scope.header = 'hi from directive';
-                $scope.arr = [1, 2, 3, 4];
+                $scope.arr = [
+                    {
+                        id: 1
+                    },
+                    {
+                        id: 2
+                    },
+                    {
+                        id: 3
+                    },
+                    {
+                        id: 4
+                    },
+                ];
                 setDefaultValues();
                 validateScope();
                 configureStyle();
+                setVirtualData();
                 function configureStyle() {
                     $scope.colStyle = {
                         'position': 'absolute',
@@ -38,6 +50,13 @@ var app;
                     $scope.canvasStyle = {
                         'position': 'relative'
                     };
+                }
+                function setVirtualData() {
+                    for (var i = 0, length_1 = $scope.arr.length; i < length_1; i++) {
+                        $scope.arr[i].style = {
+                            'top': i * $scope.cellHeight + "px"
+                        };
+                    }
                 }
                 function setDefaultValues() {
                     var DEFAULT_BUFFER = 3;

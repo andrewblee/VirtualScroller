@@ -4,7 +4,7 @@
     export interface IVirtualScrollerScope extends ng.IScope {
         person: any;
         header: string;
-        arr: Array<number>;
+        arr: Array<any>;
         cellHeight: number;
         buffer: number;
         delayInMilliSeconds: number;
@@ -20,7 +20,6 @@
         public link: ($scope: IVirtualScrollerScope, element: JQuery, attributes) => void;
         public templateUrl = 'app/virtualScroller/virtualScroller.html';
         public scope = {
-            header: '=',
             arr: '=',
             cellHeight: '=',
             buffer: '=',
@@ -38,12 +37,25 @@
                 let $column = element.find('.virtual-scroll-col');
                 let $canvas = element.find('.canvas');
 
-                $scope.header = 'hi from directive';
-                $scope.arr = [1, 2, 3, 4];
+                $scope.arr = [
+                    {
+                        id: 1
+                    },
+                    {
+                        id: 2
+                    },
+                    {
+                        id: 3
+                    },
+                    {
+                        id: 4
+                    },
+                ];
 
                 setDefaultValues();
                 validateScope();
                 configureStyle();
+                setVirtualData();
 
                 function configureStyle(): void {
                     $scope.colStyle = {
@@ -58,6 +70,14 @@
 
                     $scope.canvasStyle = {
                         'position': 'relative'
+                    }
+                }
+
+                function setVirtualData() {
+                    for (let i = 0, length = $scope.arr.length; i < length; i++) {
+                        $scope.arr[i].style = {
+                            'top': i * $scope.cellHeight + "px"
+                        }
                     }
                 }
 

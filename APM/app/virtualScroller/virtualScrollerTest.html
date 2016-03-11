@@ -9,11 +9,9 @@
     </div>
 </div>
 <virtual-scroller header="header" arr="arr" cell-height="100" top="100" col-width="200">
-    <div ng-repeat="item in arr">{{item}}</div>
-    <h2>{{header}}</h2>
-    <span>{{vm.test}}</span>
-    <p>Hello, I am {{person.name}} and,</p>
-    <p>I am a {{person.profession}}</p>
+    <div class="cell" ng-repeat="item in arr" ng-style="item.style">
+        {{item.id}}
+    </div>
 </virtual-scroller>
 <div class="grid">
     <div class="canvas">

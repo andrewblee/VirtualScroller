@@ -9,6 +9,7 @@ var app;
                 profession: 'Fake name'
             };
             $scope.header = 'Person';
+            //$scope.arr = [1,2,3];
         }
         VirtualScrollerCtrl.$inject = ['$scope'];
         return VirtualScrollerCtrl;

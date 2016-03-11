@@ -12,6 +12,7 @@
             };
 
             $scope.header = 'Person';
+            //$scope.arr = [1,2,3];
         }
     }
     angular.module("productManagement").controller("VirtualScrollerCtrl", VirtualScrollerCtrl);

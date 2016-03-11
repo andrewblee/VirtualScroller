@@ -6,11 +6,13 @@ var app;
             this.templateUrl = 'app/virtualScroller/virtualScroller.html';
             this.scope = {
                 header: '=',
+                arr: '='
             };
             this.restrict = 'E';
             this.transclude = true;
-            VirtualScroller.prototype.link = function (scope, element, attributes) {
-                scope.header = 'hi from directive';
+            VirtualScroller.prototype.link = function ($scope, element, attributes) {
+                $scope.header = 'hi from directive';
+                $scope.arr = [1, 2, 3, 4];
             };
         }
         VirtualScroller.Factory = function () {

@@ -1,4 +1,5 @@
-﻿<virtual-scroller header="header">
+﻿<virtual-scroller header="header" arr="arr">
+    <div ng-repeat="item in arr">{{item}}</div>
     <h2>{{header}}</h2>
     <span>{{vm.test}}</span>
     <p>Hello, I am {{person.name}} and,</p>

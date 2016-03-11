@@ -4,6 +4,7 @@
     export interface IVirtualScrollerScope extends ng.IScope {
         person: any;
         header: string;
+        arr: Array<number>;
     }
 
     class VirtualScroller {
@@ -11,13 +12,15 @@
         public templateUrl = 'app/virtualScroller/virtualScroller.html';
         public scope = {
             header: '=',
+            arr: '='
         };
         public restrict = 'E';
         public transclude = true;
 
         constructor() {
-            VirtualScroller.prototype.link = (scope: IVirtualScrollerScope, element: JQuery, attributes) => {
-                scope.header = 'hi from directive';
+            VirtualScroller.prototype.link = ($scope: IVirtualScrollerScope, element: JQuery, attributes) => {
+                $scope.header = 'hi from directive';
+                $scope.arr = [1, 2, 3, 4];
             };
         }
 

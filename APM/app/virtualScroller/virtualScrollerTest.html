@@ -1,7 +1,21 @@
-﻿<virtual-scroller header="header" arr="arr">
+﻿<div class="filter-section">
+    <btn ng-click="vm.test()">test</btn>
+    <p>X-scrolled <span id="x-scroll-count">0</span> times.</p>
+    <p>Y-scrolled <span id="y-scroll-count">0</span> times.</p>
+    <p>gX-scrolled <span id="gx-scroll-count">0</span> times.</p>
+</div>
+<div class="header-row">
+    <div class="canvas">
+    </div>
+</div>
+<virtual-scroller header="header" arr="arr" cell-height="100" top="100" col-width="200">
     <div ng-repeat="item in arr">{{item}}</div>
     <h2>{{header}}</h2>
     <span>{{vm.test}}</span>
     <p>Hello, I am {{person.name}} and,</p>
     <p>I am a {{person.profession}}</p>
 </virtual-scroller>
+<div class="grid">
+    <div class="canvas">
+    </div>
+</div>

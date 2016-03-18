@@ -40,15 +40,11 @@
                 let $canvas = element.find('.canvas');
                 console.log('element.height: ' + element.height());
 
-                
+                setCanvasHeight();
+                setVirtualData();
                 setDefaultValues();
                 validateScope();
                 configureStyle();
-                
-                $scope.$watchCollection('arr', (newCollection, oldCollection, scope) => {
-                    setCanvasHeight();
-                    setVirtualData();
-                });
 
                 (<any>$column).scrolled($scope.delayInMilliSeconds, function () {
                     setVirtualData();
@@ -87,7 +83,6 @@
                 }
 
                 function setCanvasHeight(): void {
-                    var height = 
                     $canvas.height($scope.arr.length * $scope.cellHeight);
                 }
 

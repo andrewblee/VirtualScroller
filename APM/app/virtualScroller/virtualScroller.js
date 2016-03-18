@@ -19,9 +19,7 @@ var app;
             this.transclude = true;
             this.replace = true;
             VirtualScroller.prototype.link = function ($scope, element, attributes) {
-                //let $column = element.find('.virtual-scroll-col');
-                var $canvas = element.find('.canvas');
-                console.log('element.height: ' + element.height());
+                var canvas = element.children();
                 setCanvasHeight();
                 setVirtualData();
                 setDefaultValues();
@@ -62,7 +60,7 @@ var app;
                     }
                 }
                 function setCanvasHeight() {
-                    $canvas.height($scope.arr.length * $scope.cellHeight);
+                    canvas.height($scope.arr.length * $scope.cellHeight);
                 }
                 function setDefaultValues() {
                     var DEFAULT_BUFFER = 3;

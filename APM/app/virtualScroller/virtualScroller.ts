@@ -37,9 +37,7 @@
 
         constructor() {
             VirtualScroller.prototype.link = ($scope: IVirtualScrollerScope, element: JQuery, attributes) => {
-                //let $column = element.find('.virtual-scroll-col');
-                let $canvas = element.find('.canvas');
-                console.log('element.height: ' + element.height());
+                let canvas = element.children();
 
                 setCanvasHeight();
                 setVirtualData();
@@ -89,7 +87,7 @@
                 }
 
                 function setCanvasHeight(): void {
-                    $canvas.height($scope.arr.length * $scope.cellHeight);
+                    canvas.height($scope.arr.length * $scope.cellHeight);
                 }
 
                 function setDefaultValues(): void {

@@ -17,8 +17,9 @@ var app;
             };
             this.restrict = 'E';
             this.transclude = true;
+            this.replace = true;
             VirtualScroller.prototype.link = function ($scope, element, attributes) {
-                var $column = element.find('.virtual-scroll-col');
+                //let $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
                 console.log('element.height: ' + element.height());
                 setCanvasHeight();
@@ -26,7 +27,11 @@ var app;
                 setDefaultValues();
                 validateScope();
                 configureStyle();
-                $column.scrolled($scope.delayInMilliSeconds, function () {
+                element.scrolled($scope.delayInMilliSeconds, function () {
+                    setVirtualData();
+                    $scope.$apply();
+                });
+                window.addEventListener('resize', function () {
                     setVirtualData();
                     $scope.$apply();
                 });
@@ -45,8 +50,8 @@ var app;
                     };
                 }
                 function setVirtualData() {
-                    var firstVisible = Math.floor($column.scrollTop() / $scope.cellHeight);
-                    var visibleColHeight = $column.height();
+                    var firstVisible = Math.floor(element.scrollTop() / $scope.cellHeight);
+                    var visibleColHeight = element.height();
                     var visibleCellCount = Math.round(visibleColHeight / $scope.cellHeight);
                     var lastVisible = firstVisible + visibleCellCount;
                     $scope.virtualData = $scope.arr.slice(firstVisible, lastVisible);

@@ -14,6 +14,7 @@
         bottom: number;
         left: number;
         colWidth: number;
+        virtualData: Array<any>;
     }
 
     class VirtualScroller {
@@ -27,7 +28,8 @@
             top: '=',
             bottom: '=',
             left: '=',
-            colWidth: '='
+            colWidth: '=',
+            virtualData: '='
         };
         public restrict = 'E';
         public transclude = true;
@@ -36,26 +38,22 @@
             VirtualScroller.prototype.link = ($scope: IVirtualScrollerScope, element: JQuery, attributes) => {
                 let $column = element.find('.virtual-scroll-col');
                 let $canvas = element.find('.canvas');
+                console.log('element.height: ' + element.height());
 
-                $scope.arr = [
-                    {
-                        id: 1
-                    },
-                    {
-                        id: 2
-                    },
-                    {
-                        id: 3
-                    },
-                    {
-                        id: 4
-                    },
-                ];
-
+                
                 setDefaultValues();
                 validateScope();
                 configureStyle();
-                setVirtualData();
+                
+                $scope.$watchCollection('arr', (newCollection, oldCollection, scope) => {
+                    setCanvasHeight();
+                    setVirtualData();
+                });
+
+                (<any>$column).scrolled($scope.delayInMilliSeconds, function () {
+                    setVirtualData();
+                    $scope.$apply();
+                });
 
                 function configureStyle(): void {
                     $scope.colStyle = {
@@ -74,11 +72,23 @@
                 }
 
                 function setVirtualData() {
-                    for (let i = 0, length = $scope.arr.length; i < length; i++) {
-                        $scope.arr[i].style = {
-                            'top': i * $scope.cellHeight + "px"
+                    let firstVisible = Math.floor($column.scrollTop() / $scope.cellHeight);
+                    let visibleColHeight = $column.height();
+                    let visibleCellCount = Math.round(visibleColHeight / $scope.cellHeight);
+                    let lastVisible = firstVisible + visibleCellCount;
+
+                    $scope.virtualData = $scope.arr.slice(firstVisible, lastVisible);
+
+                    for (let i = 0, length = $scope.virtualData.length; i < length; i++) {
+                        $scope.virtualData[i].style = {
+                            'top': (firstVisible + i) * $scope.cellHeight + "px"
                         }
                     }
+                }
+
+                function setCanvasHeight(): void {
+                    var height = 
+                    $canvas.height($scope.arr.length * $scope.cellHeight);
                 }
 
                 function setDefaultValues(): void {

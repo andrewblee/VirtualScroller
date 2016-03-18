@@ -12,31 +12,26 @@ var app;
                 top: '=',
                 bottom: '=',
                 left: '=',
-                colWidth: '='
+                colWidth: '=',
+                virtualData: '='
             };
             this.restrict = 'E';
             this.transclude = true;
             VirtualScroller.prototype.link = function ($scope, element, attributes) {
                 var $column = element.find('.virtual-scroll-col');
                 var $canvas = element.find('.canvas');
-                $scope.arr = [
-                    {
-                        id: 1
-                    },
-                    {
-                        id: 2
-                    },
-                    {
-                        id: 3
-                    },
-                    {
-                        id: 4
-                    },
-                ];
+                console.log('element.height: ' + element.height());
                 setDefaultValues();
                 validateScope();
                 configureStyle();
-                setVirtualData();
+                $scope.$watchCollection('arr', function (newCollection, oldCollection, scope) {
+                    setCanvasHeight();
+                    setVirtualData();
+                });
+                $column.scrolled($scope.delayInMilliSeconds, function () {
+                    setVirtualData();
+                    $scope.$apply();
+                });
                 function configureStyle() {
                     $scope.colStyle = {
                         'position': 'absolute',
@@ -52,11 +47,19 @@ var app;
                     };
                 }
                 function setVirtualData() {
-                    for (var i = 0, length_1 = $scope.arr.length; i < length_1; i++) {
-                        $scope.arr[i].style = {
-                            'top': i * $scope.cellHeight + "px"
+                    var firstVisible = Math.floor($column.scrollTop() / $scope.cellHeight);
+                    var visibleColHeight = $column.height();
+                    var visibleCellCount = Math.round(visibleColHeight / $scope.cellHeight);
+                    var lastVisible = firstVisible + visibleCellCount;
+                    $scope.virtualData = $scope.arr.slice(firstVisible, lastVisible);
+                    for (var i = 0, length_1 = $scope.virtualData.length; i < length_1; i++) {
+                        $scope.virtualData[i].style = {
+                            'top': (firstVisible + i) * $scope.cellHeight + "px"
                         };
                     }
+                }
+                function setCanvasHeight() {
+                    var height = $canvas.height($scope.arr.length * $scope.cellHeight);
                 }
                 function setDefaultValues() {
                     var DEFAULT_BUFFER = 3;

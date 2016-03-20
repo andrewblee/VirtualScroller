@@ -32,7 +32,7 @@
     <Content Include="app\directiveTest\virtual-scroll-column.html" />
     <Content Include="app\directiveTest\directiveTest.html" />
     <Content Include="scripts\scrolled.js" />
-    <Content Include="sidebar.css" />
+    <None Include="app.less" />
     <Content Include="sidebar.html" />
     <Content Include="index.html" />
     <Content Include="scripts\angular-mocks.js" />
@@ -45,6 +45,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\virtualScroller\virtual-scoller.less" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

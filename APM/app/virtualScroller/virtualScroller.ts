@@ -39,11 +39,11 @@
             VirtualScroller.prototype.link = ($scope: IVirtualScrollerScope, element: JQuery, attributes) => {
                 let canvas = element.children();
 
-                setCanvasHeight();
-                setVirtualData();
                 setDefaultValues();
                 validateScope();
                 configureStyle();
+                //setCanvasHeight();
+                setVirtualData();
 
                 (<any>element).scrolled($scope.delayInMilliSeconds, function () {
                     setVirtualData();
@@ -56,22 +56,26 @@
                 });
 
                 function configureStyle(): void {
-                    $scope.colStyle = {
-                        'position': 'absolute',
-                        'top': $scope.top,
-                        'bottom': $scope.bottom,
-                        'left': $scope.left,
-                        'width': $scope.colWidth,
-                        'overflow-x': 'hidden',
-                        'overflow-y': 'auto'
-                    };
+                    //$scope.colStyle = {
+                    //    'position': 'absolute',
+                    //    'top': $scope.top,
+                    //    'bottom': $scope.bottom,
+                    //    'left': $scope.left,
+                    //    'width': $scope.colWidth,
+                    //    'overflow-x': 'hidden',
+                    //    'overflow-y': 'auto'
+                    //};
 
-                    $scope.canvasStyle = {
-                        'position': 'relative'
-                    }
+                    //$scope.canvasStyle = {
+                    //    'position': 'relative',
+                    //}
                 }
 
                 function setVirtualData() {
+                    if (!canvas.height()) {
+                        canvas.height($scope.arr.length * $scope.cellHeight);
+                    }
+
                     let firstVisible = Math.floor(element.scrollTop() / $scope.cellHeight);
                     let visibleColHeight = element.height();
                     let visibleCellCount = Math.round(visibleColHeight / $scope.cellHeight);

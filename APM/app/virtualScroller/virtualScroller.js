@@ -20,11 +20,11 @@ var app;
             this.replace = true;
             VirtualScroller.prototype.link = function ($scope, element, attributes) {
                 var canvas = element.children();
-                setCanvasHeight();
-                setVirtualData();
                 setDefaultValues();
                 validateScope();
                 configureStyle();
+                //setCanvasHeight();
+                setVirtualData();
                 element.scrolled($scope.delayInMilliSeconds, function () {
                     setVirtualData();
                     $scope.$apply();
@@ -34,20 +34,23 @@ var app;
                     $scope.$apply();
                 });
                 function configureStyle() {
-                    $scope.colStyle = {
-                        'position': 'absolute',
-                        'top': $scope.top,
-                        'bottom': $scope.bottom,
-                        'left': $scope.left,
-                        'width': $scope.colWidth,
-                        'overflow-x': 'hidden',
-                        'overflow-y': 'auto'
-                    };
-                    $scope.canvasStyle = {
-                        'position': 'relative'
-                    };
+                    //$scope.colStyle = {
+                    //    'position': 'absolute',
+                    //    'top': $scope.top,
+                    //    'bottom': $scope.bottom,
+                    //    'left': $scope.left,
+                    //    'width': $scope.colWidth,
+                    //    'overflow-x': 'hidden',
+                    //    'overflow-y': 'auto'
+                    //};
+                    //$scope.canvasStyle = {
+                    //    'position': 'relative',
+                    //}
                 }
                 function setVirtualData() {
+                    if (!canvas.height()) {
+                        canvas.height($scope.arr.length * $scope.cellHeight);
+                    }
                     var firstVisible = Math.floor(element.scrollTop() / $scope.cellHeight);
                     var visibleColHeight = element.height();
                     var visibleCellCount = Math.round(visibleColHeight / $scope.cellHeight);

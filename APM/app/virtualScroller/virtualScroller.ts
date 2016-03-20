@@ -2,18 +2,9 @@
     'use strict';
 
     export interface IVirtualScrollerScope extends ng.IScope {
-        person: any;
-        header: string;
         arr: Array<any>;
-        cellHeight: number;
-        buffer: number;
-        delayInMilliSeconds: number;
         colStyle: {};
         canvasStyle: {};
-        top: number;
-        bottom: number;
-        left: number;
-        colWidth: number;
         virtualData: Array<any>;
     }
 
@@ -22,13 +13,6 @@
         public templateUrl = 'app/virtualScroller/virtualScroller.html';
         public scope = {
             arr: '=',
-            cellHeight: '=',
-            buffer: '=',
-            delayInMilliseconds: '=',
-            top: '=',
-            bottom: '=',
-            left: '=',
-            colWidth: '=',
             virtualData: '='
         };
         public restrict = 'E';
@@ -41,7 +25,7 @@
 
                 setVirtualData();
 
-                (<any>element).scrolled($scope.delayInMilliSeconds, function () {
+                (<any>element).scrolled(30, function () {
                     setVirtualData();
                     $scope.$apply();
                 });
@@ -56,23 +40,23 @@
                         setCanvasHeight();
                     }
 
-                    let firstVisible = Math.floor(element.scrollTop() / $scope.cellHeight);
+                    let firstVisible = Math.floor(element.scrollTop() / attributes.cellHeight);
                     let visibleColHeight = element.height();
-                    let visibleCellCount = Math.round(visibleColHeight / $scope.cellHeight);
+                    let visibleCellCount = Math.round(visibleColHeight / attributes.cellHeight);
                     let lastVisible = firstVisible + visibleCellCount;
 
                     $scope.virtualData = $scope.arr.slice(firstVisible, lastVisible);
 
                     for (let i = 0, length = $scope.virtualData.length; i < length; i++) {
                         $scope.virtualData[i].style = {
-                            'top': (firstVisible + i) * $scope.cellHeight + "px"
+                            'top': (firstVisible + i) * attributes.cellHeight + "px"
                         }
                     }
                 }
 
                 function setCanvasHeight(): void {
                     $scope.canvasStyle = {
-                        height: $scope.arr.length * $scope.cellHeight
+                        height: $scope.arr.length * attributes.cellHeight
                     }
                 }
             };

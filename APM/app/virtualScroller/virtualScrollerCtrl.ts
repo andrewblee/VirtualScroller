@@ -4,15 +4,6 @@
 
         static $inject = ['$scope'];
         constructor(private $scope: IVirtualScrollerScope) {
-            this.test = 5;
-
-            $scope.person = {
-                name: 'John Doe',
-                profession: 'Fake name'
-            };
-
-            $scope.header = 'Person';
-
             $scope.virtualData = [];
                 $scope.arr = [
                     {

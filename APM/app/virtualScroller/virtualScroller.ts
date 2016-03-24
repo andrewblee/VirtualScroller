@@ -43,7 +43,7 @@
                     let firstVisible = Math.floor(element.scrollTop() / attributes.cellHeight);
                     let visibleColHeight = element.height();
                     let visibleCellCount = Math.round(visibleColHeight / attributes.cellHeight);
-                    let lastVisible = firstVisible + visibleCellCount;
+                    let lastVisible = firstVisible + visibleCellCount + parseInt(attributes.buffer);
 
                     $scope.virtualData = $scope.arr.slice(firstVisible, lastVisible);
 

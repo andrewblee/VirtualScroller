@@ -29,7 +29,7 @@ var app;
                     var firstVisible = Math.floor(element.scrollTop() / attributes.cellHeight);
                     var visibleColHeight = element.height();
                     var visibleCellCount = Math.round(visibleColHeight / attributes.cellHeight);
-                    var lastVisible = firstVisible + visibleCellCount;
+                    var lastVisible = firstVisible + visibleCellCount + parseInt(attributes.buffer);
                     $scope.virtualData = $scope.arr.slice(firstVisible, lastVisible);
                     for (var i = 0, length_1 = $scope.virtualData.length; i < length_1; i++) {
                         $scope.virtualData[i].style = {

@@ -8,8 +8,8 @@
     <div class="canvas">
     </div>
 </div>
-<virtual-scroller header="header" arr="arr" virtual-data="virtualData" cell-height="100" top="100" buffer="3" col-width="200">
-    <div class="cell" ng-repeat="item in virtualData" ng-style="item.style" ng-class="cell">
+<virtual-scroller arr="arr" virtual-data="virtualData" cell-height="100" buffer="3">
+    <div class="cell" ng-repeat="item in virtualData" ng-style="item.style">
         {{item.id}}
     </div>
 </virtual-scroller>
